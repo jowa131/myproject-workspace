@@ -39,6 +39,10 @@ For each non-trivial task, create or identify a task packet that states:
 - verification commands
 - handoff expectations
 
+Use `C:\MyProject\docs\task-packet-template.md` as the default task packet
+shape, and `C:\MyProject\docs\verification-gates.md` to label checks as
+required, advisory, blocked-by-external, or not-applicable.
+
 Do not treat the harness as extra ceremony. Its purpose is to keep work scoped,
 testable, secure, and easy for the next thread to continue.
 
@@ -55,6 +59,25 @@ threads, write a concise handoff to the Wiki.
 
 Never write secrets to the Wiki. Graphify output is generated reference
 material and does not override approved Wiki records.
+
+## Workspace state and generated artifacts
+
+Before non-trivial work, record whether the relevant repositories are dirty and
+whether dirty files are source, docs, generated artifacts, or unrelated local
+state. `scripts\myproject-status.ps1` provides a quick overview.
+
+Generated or local runtime artifacts should not be used as broad search or
+review input unless the task is specifically about them. Follow
+`C:\MyProject\docs\generated-artifacts.md` and add project-specific generated
+paths to the closest `.gitignore`.
+
+For browser-facing or published content changes, use
+`C:\MyProject\docs\ui-content-regression-checklist.md` and report desktop and
+mobile coverage for affected routes.
+
+For Yulchive feature projects, keep ownership boundaries aligned with
+`C:\MyProject\docs\yulchive-integration-boundary.md`: feature projects own
+source and tests, while `yulchive-astro` is the public integration point.
 
 ## Token and log hygiene
 
