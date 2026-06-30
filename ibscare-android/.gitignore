@@ -1,0 +1,9 @@
+.gradle/
+.omo/
+.codex-handoff/
+.codex-remote-attachments/
+app/build/
+build/
+local.properties
+*.apk
+*.zip

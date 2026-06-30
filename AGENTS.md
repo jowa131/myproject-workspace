@@ -1,5 +1,40 @@
 # C:\MyProject Working Agreement
 
+## Evidence-first answers
+
+Do not answer from guesswork for project, account, trading, deployment, code,
+data, or operational facts.
+
+- Verify names, identifiers, mappings, statuses, prices, dates, command
+  results, file contents, API responses, and account-specific facts from the
+  current workspace, Wiki, logs, command output, or an allowed external source
+  before presenting them as true.
+- If a fact is not verified, say so clearly instead of making a plausible
+  statement. Prefer "확인된 정보가 아닙니다" or "현재 근거로는 단정할 수 없습니다".
+- If verification is possible with available tools, perform the verification
+  before answering.
+- If a previous answer was based on an unchecked assumption, correct it
+  explicitly and update the Wiki when the lesson is reusable.
+
+## KST time standard
+
+Unless the user explicitly names another timezone, treat every user command,
+automation, schedule, trigger window, deadline, log summary, report timestamp,
+and follow-up time under `C:\MyProject` as Asia/Seoul time (KST, UTC+09:00).
+
+- Before creating, updating, validating, or reporting an automation, convert
+  any scheduler-native time representation back to KST and state the KST
+  execution window.
+- If a tool stores cron or RRULE hours in UTC, calculate the UTC fields from
+  the intended KST time first, then verify the stored schedule by converting it
+  back to KST before reporting success.
+- When current time affects safety, trading, deployment, or data decisions,
+  check the current local KST time with a tool and use exact dates and times.
+- If the user says "today", "tomorrow", "morning", "noon", "close", or
+  similar relative time words, resolve them in KST unless the user explicitly
+  says otherwise.
+- Record reusable timezone findings in the Wiki without secrets.
+
 ## Wiki-first workflow
 
 The official knowledge base is `C:\MyProject\wiki`.
@@ -7,6 +42,13 @@ The official knowledge base is `C:\MyProject\wiki`.
 1. Read the relevant Wiki documents before starting work.
 2. Perform and verify the requested work.
 3. Update the Wiki before considering the task complete.
+
+For Codex threads, automations, and follow-up jobs that work on a subproject
+under `C:\MyProject`, include `C:\MyProject` itself as a workspace root or
+writable root, not only the subproject directory. The Wiki is a sibling of most
+project repositories, so a workspace limited to `C:\MyProject\<project>` can
+read project code but fail the required Wiki update with a sandbox access
+denial.
 
 ## Common vibe-coding agent harness
 
@@ -29,6 +71,17 @@ investigations, deployment work, and handoffs:
 For small tasks, one Codex thread may perform several roles sequentially, but
 the role contracts must still be respected: input, editable scope, output,
 verification command, completion criteria, and handoff.
+
+### Review subagent timeout rule
+
+Review subagents are gate helpers, not blockers for unbounded exploration.
+
+- Spawn only review subagents whose verdict is necessary for the current gate.
+- Give each reviewer one narrow responsibility, fixed files, fixed evidence, and no broad repository exploration unless explicitly requested.
+- Require reviewers to return `APPROVE`, `REVISE`, or `INCONCLUSIVE`.
+- Default wait policy: wait 120 seconds, send one nudge asking for a verdict from the checked scope only, then wait 60 seconds.
+- If no final verdict arrives after that, record the reviewer as `INCONCLUSIVE` and continue with direct evidence or completed required gates.
+- Never count a silent, running, closed, or interrupted reviewer as approval.
 
 For each non-trivial task, create or identify a task packet that states:
 
@@ -78,6 +131,23 @@ mobile coverage for affected routes.
 For Yulchive feature projects, keep ownership boundaries aligned with
 `C:\MyProject\docs\yulchive-integration-boundary.md`: feature projects own
 source and tests, while `yulchive-astro` is the public integration point.
+
+## IBS Care release notes
+
+When `C:\MyProject\ibscare-android` produces a new app version, versionCode, or
+phone-test APK/ZIP artifact, updating the local-only release note is required
+before the work is considered done.
+
+- Update `C:\MyProject\yulchive-astro\src\data\ibsCareReleases.mjs` and the
+  local-only release note pages under
+  `C:\MyProject\yulchive-astro\src\pages\ibs-care*` with the new version,
+  verification date, artifact names, SHA256 hashes, and key verified behavior.
+- Keep `/ibs-care` and `/ibs-care/*` local-only, excluded from public sitemap
+  and RSS exposure, and verify that the page remains accessible only from the
+  current PC/local loopback path.
+- Record the release note update and verification result in both
+  `C:\MyProject\wiki\projects\ibscare-android.md` and
+  `C:\MyProject\wiki\projects\yulchive-astro.md`.
 
 ## Token and log hygiene
 

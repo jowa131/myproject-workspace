@@ -1,0 +1,12 @@
+<resources>
+    <color name="surface_primary">#F7FAF8</color>
+    <color name="surface_secondary">#FFFFFF</color>
+    <color name="surface_elevated">#EEF5F1</color>
+    <color name="surface_field">#FDFEFE</color>
+    <color name="text_primary">#17211D</color>
+    <color name="text_secondary">#52615B</color>
+    <color name="border_default">#D8E4DE</color>
+    <color name="accent_primary">#197A68</color>
+    <color name="accent_soft">#DDF2EC</color>
+    <color name="status_warning">#A0641F</color>
+</resources>

@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "AbuseWatch 증거 캡처",
+  "version": "0.1.0",
+  "action": {
+    "default_title": "보이는 증거 저장"
+  },
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": [],
+  "background": {
+    "service_worker": "background.js"
+  }
+}
