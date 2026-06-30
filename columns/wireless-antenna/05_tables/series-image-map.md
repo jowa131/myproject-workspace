@@ -9,4 +9,3 @@
 | `10-omni-sector-directionality.png` | 3 | 옴니/섹터 방향성 비교 | 사용 |
 | `12-patch-antenna-radiation.png` | 3 | 패치 안테나 방사 원리 | 사용 |
 | `11-sector-antenna-elements.png` | - | 섹터 소자 설명 | 보류 |
-

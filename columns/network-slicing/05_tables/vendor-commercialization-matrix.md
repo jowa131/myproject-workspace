@@ -6,4 +6,3 @@
 | Samsung | E2E slicing, orchestration, RIC/SLA assurance | KDDI trial, KDDI 5G SA Core, KDDI broadcaster solution | Live-network trial / commercial foundation | 상용화 진입, 단 서비스별 장비 역할 확인 필요 |
 | Ericsson | RAN slicing, dynamic slicing, orchestration | Singtel, Telstra, COSMOTE, Airtel | Commercial service / rollout | 상용 서비스 사례가 비교적 풍부 |
 | Nokia | 4G/5G slicing, FWA, edge, on-demand, AI | Telia FWA, A1, du, AWS/Orange | Commercial FWA / trials | FWA/edge 중심 상용 및 실증 |
-

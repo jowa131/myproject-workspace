@@ -20,4 +20,3 @@ QCI별 RB 할당은 "무선 자원을 어떻게 나눠 줄 것인가"에 대한 
 - 더 안전한 표현: "QCI별 RB 할당은 RAN slice를 구현하는 수단이 될 수 있지만, 그것만으로 end-to-end network slicing은 아니다."
 - RAN slicing이 곧 hard isolation이라고 쓰지 않는다.
 - Transport slicing은 MPLS/SRv6/FlexE/TSN 중 하나로 고정하지 않는다.
-

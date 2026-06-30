@@ -140,4 +140,3 @@ QCI/5QI 기반 처리는 packet 또는 flow를 어떻게 대우할지 정하는 
 - Nokia 4G/5G Network Slicing: https://www.nokia.com/mobile-networks/monetization/network-slicing/
 - Samsung Network Slicing: https://www.samsung.com/global/business/networks/solutions/network-slicing/
 - Huawei 5G Network Slicing Router: https://www.huawei.com/en/news/2017/2/industry-first-5g-network-slicing-router
-
