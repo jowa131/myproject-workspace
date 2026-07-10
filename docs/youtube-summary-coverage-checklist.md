@@ -26,6 +26,14 @@ ready for user review or publication.
      claim, policy option, or official follow-up.
    - Financial and economic reports often contain several independent issues;
      do not collapse them into the most prominent program name.
+   - Macro-economy and inflation response briefings are recurring cabinet
+     meeting coverage. Track oil prices, exchange rates, interest rates, growth
+     outlook, current account or external soundness, inflation targets,
+     employment, and exchange-rate or vulnerable-borrower support as their own
+     coverage unit when present.
+   - When a previous cabinet-meeting summary has a comparable macro-economy
+     card, include a short before/after comparison in the current detailed
+     agenda or coverage audit.
 
 4. Match every verified official agenda item.
    - Compare the transcript summary with official briefing pages when available.
@@ -63,12 +71,17 @@ ready for user review or publication.
 - `질의` and `답변` must be paired in the same note group.
 - Repeated timestamps should not appear in visible detailed notes.
 - Detail notes must add value beyond the bullet immediately above them.
+- Run the tracker repetition checker for Astro temp pages or structured
+  components:
+  `node scripts/check-youtube-summary-repetition.mjs <astro-temp-or-component-file>`.
+  The result must be 0 redundant bullet/note pairs.
 
 ## Definition Of Done
 
 For a public or preview YouTube summary:
 
 - Coverage audit file exists and has no unexplained `missing` item.
+- Repetition checker passes with 0 redundant bullet/note pairs.
 - Content verifier passes in `C:\MyProject\yulchive-astro`.
 - Astro build passes in `C:\MyProject\yulchive-astro`.
 - Desktop and mobile render checks pass for the affected route.

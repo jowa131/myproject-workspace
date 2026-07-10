@@ -35,6 +35,31 @@ and follow-up time under `C:\MyProject` as Asia/Seoul time (KST, UTC+09:00).
   says otherwise.
 - Record reusable timezone findings in the Wiki without secrets.
 
+## User-approved automation semantics
+
+For any automation, monitor, reminder, follow-up, scheduler, heartbeat, cron,
+background thread, or other recurring/token-consuming behavior under
+`C:\MyProject`, never invent or silently choose the execution cadence.
+
+- Explicit user approval is required before creating or changing any schedule,
+  polling interval, recurrence frequency, trigger window, retry/backoff policy,
+  catch-up/backfill behavior, target thread fan-out, or token-consuming
+  monitor loop.
+- "Make it automatic", "monitor it", "catch up", "late start", or similar
+  intent is not approval for a concrete interval such as 5 minutes, 10 minutes,
+  hourly, daily, or continuous polling. If the cadence was not specified, ask
+  for the cadence or propose options without saving an active automation.
+- Do not create an ACTIVE recurring automation from an inferred schedule. Use a
+  draft/suggested automation or a documented plan until the user explicitly
+  approves the exact cadence and execution window.
+- Before enabling a recurring automation, report the exact KST schedule,
+  expected token/work cost driver, stop condition, duplicate-send guard, and
+  target thread/workspace. Record the approval and verification result in the
+  Wiki without secrets.
+- If an unapproved or ambiguous recurring automation is discovered, pause it
+  first when it is safe to do so, verify the paused state, record the incident,
+  and wait for explicit user-approved semantics before re-enabling it.
+
 ## Wiki-first workflow
 
 The official knowledge base is `C:\MyProject\wiki`.
@@ -43,12 +68,47 @@ The official knowledge base is `C:\MyProject\wiki`.
 2. Perform and verify the requested work.
 3. Update the Wiki before considering the task complete.
 
+Every Codex work unit must leave a Wiki record by default. This includes
+project work, projectless/general Codex chats, investigations, planning,
+failed-but-instructive attempts, automation changes, subagent handoffs, and
+operational decisions. Keep the entry concise and centered on the core outcome,
+meaningful decisions, evidence, current status, unresolved issues, and next
+steps. Do not omit a work item merely because the record may later feel noisy.
+Noise reduction is a separate cleanup/review job for a designated agent or
+thread; the current worker records first, then pruning can happen later.
+
+When any goal, instruction, task, investigation, fix, plan, automation change,
+or delegated work unit is finished, the final report must include both the
+completed outcome and the next step. If no meaningful next action remains,
+state that no next step is currently required. The report should stay concise
+and evidence-based: what was done, how it was verified, unresolved issues if
+any, and the recommended next step.
+
+Wiki-first does not mean raw transcript dumping. Never write secrets, access
+tokens, full private logs, or unnecessary raw command output. Summarize the
+meaningful part and point to local evidence paths when needed.
+
 For Codex threads, automations, and follow-up jobs that work on a subproject
 under `C:\MyProject`, include `C:\MyProject` itself as a workspace root or
 writable root, not only the subproject directory. The Wiki is a sibling of most
 project repositories, so a workspace limited to `C:\MyProject\<project>` can
 read project code but fail the required Wiki update with a sandbox access
 denial.
+
+Preferred root policy: start Codex for subproject work with `C:\MyProject` as
+the primary working root, then name the target subproject in the prompt or add
+it as an additional writable directory. For Codex CLI, the verified pattern is
+`codex -C C:\MyProject` or `codex -C C:\MyProject --add-dir
+C:\MyProject\<project>`. If a thread starts inside a subproject and cannot read
+or write `C:\MyProject\wiki`, stop and restart or re-open it with
+`C:\MyProject` included rather than continuing without the Wiki update.
+
+Root access is not a mandate to read the whole vault. For subproject work, read
+only the relevant project Wiki entry, the current-status section needed for the
+handoff, and shared `knowledge` or `decisions` documents that directly affect
+the task. Do not spend context on unrelated sibling project Wiki files unless
+the task crosses that boundary or the user explicitly asks for a cross-project
+review.
 
 ## Common vibe-coding agent harness
 
@@ -133,6 +193,13 @@ For Yulchive feature projects, keep ownership boundaries aligned with
 source and tests, while `yulchive-astro` is the public integration point.
 
 ## IBS Care release notes
+
+For IBS Care, any user-installable code change must bump both
+`versionName` and `versionCode` before producing APK/ZIP artifacts. Do not
+replace hashes under the same app version for a changed installable build.
+When handing an installable IBS Care build to the user, present the ZIP artifact
+first, not the raw APK path; the APK path may be included only as supporting
+detail.
 
 When `C:\MyProject\ibscare-android` produces a new app version, versionCode, or
 phone-test APK/ZIP artifact, updating the local-only release note is required

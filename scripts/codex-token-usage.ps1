@@ -49,6 +49,34 @@ function UsageDelta($current, $previous) {
   }
 }
 
+function FormatDurationMs($durationMs) {
+  $totalSeconds = [int64] [math]::Floor($durationMs / 1000)
+  $hours = [int64] [math]::Floor($totalSeconds / 3600)
+  $minutes = [int64] [math]::Floor(($totalSeconds % 3600) / 60)
+  $seconds = [int64] ($totalSeconds % 60)
+
+  if ($hours -gt 0) {
+    return "${hours}h ${minutes}m ${seconds}s"
+  }
+
+  if ($minutes -gt 0) {
+    return "${minutes}m ${seconds}s"
+  }
+
+  return "${seconds}s"
+}
+
+function OverlapDurationMs($startTime, $endTime, $windowStart, $windowEnd) {
+  $start = if ($startTime -gt $windowStart) { $startTime } else { $windowStart }
+  $end = if ($endTime -lt $windowEnd) { $endTime } else { $windowEnd }
+
+  if ($end -le $start) {
+    return [int64] 0
+  }
+
+  return [int64] [math]::Floor(($end - $start).TotalMilliseconds)
+}
+
 function SessionFiles($targetPath) {
   if ($targetPath) {
     if (-not (Test-Path -LiteralPath $targetPath)) {
@@ -69,7 +97,7 @@ function SessionFiles($targetPath) {
     Sort-Object FullName
 }
 
-function TokenEvents($file, $tailCount) {
+function RolloutEvents($file, $tailCount) {
   $lines = if ($tailCount -gt 0) {
     Get-Content -LiteralPath $file.FullName -Tail $tailCount
   } else {
@@ -83,6 +111,12 @@ function TokenEvents($file, $tailCount) {
       continue
     }
 
+    $event
+  }
+}
+
+function TokenEvents($file, $tailCount) {
+  foreach ($event in RolloutEvents $file $tailCount) {
     if ($event.payload.type -ne 'token_count') {
       continue
     }
@@ -97,6 +131,9 @@ function DailySummary($files, $dateText) {
   $total = EmptyUsage
   $sessions = @()
   $eventCount = 0
+  $workDurationMs = [int64] 0
+  $workEventCount = 0
+  $workSessionCount = 0
 
   foreach ($file in $files) {
     if ($file.LastWriteTime -lt $targetDate) {
@@ -106,22 +143,44 @@ function DailySummary($files, $dateText) {
     $baseline = EmptyUsage
     $lastInWindow = $null
     $sessionEventCount = 0
+    $sessionWorkDurationMs = [int64] 0
+    $sessionWorkEventCount = 0
 
-    foreach ($event in TokenEvents $file 0) {
+    foreach ($event in RolloutEvents $file 0) {
       $localTime = ([datetime] $event.timestamp).ToLocalTime()
+
+      if ($event.payload.type -eq 'task_complete' -and $null -ne $event.payload.duration_ms) {
+        $durationMs = [int64] $event.payload.duration_ms
+        if ($durationMs -gt 0) {
+          $startTime = $localTime.AddMilliseconds(-$durationMs)
+          $overlapMs = OverlapDurationMs $startTime $localTime $targetDate $nextDate
+          if ($overlapMs -gt 0) {
+            $sessionWorkDurationMs += $overlapMs
+            $sessionWorkEventCount += 1
+          }
+        }
+
+        continue
+      }
+
+      if ($event.payload.type -ne 'token_count') {
+        continue
+      }
+
       $usage = UsageFromEvent $event
 
       if ($localTime -lt $targetDate) {
         $baseline = $usage
-        continue
+      } elseif ($localTime -lt $nextDate) {
+        $lastInWindow = $usage
+        $sessionEventCount += 1
       }
+    }
 
-      if ($localTime -ge $nextDate) {
-        break
-      }
-
-      $lastInWindow = $usage
-      $sessionEventCount += 1
+    if ($sessionWorkEventCount -gt 0) {
+      $workDurationMs += $sessionWorkDurationMs
+      $workEventCount += $sessionWorkEventCount
+      $workSessionCount += 1
     }
 
     if (-not $lastInWindow) {
@@ -145,15 +204,21 @@ function DailySummary($files, $dateText) {
       outputTokens = $delta.output
       reasoningOutputTokens = $delta.reasoning
       totalTokens = $delta.total
+      workDurationMs = $sessionWorkDurationMs
+      workEventCount = $sessionWorkEventCount
     }
   }
 
   $summary = [ordered]@{
     date = $dateText
     timezone = [TimeZoneInfo]::Local.Id
-    source = 'codex session token_count'
+    source = 'codex session token_count and task_complete'
     sessionCount = $sessions.Count
     eventCount = $eventCount
+    workSessionCount = $workSessionCount
+    workEventCount = $workEventCount
+    workDurationMs = $workDurationMs
+    workDurationLabel = FormatDurationMs $workDurationMs
     inputTokens = $total.input
     cachedInputTokens = $total.cached
     uncachedInputTokens = [int64] ($total.input - $total.cached)
