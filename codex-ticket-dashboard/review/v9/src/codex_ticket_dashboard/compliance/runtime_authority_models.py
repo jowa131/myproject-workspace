@@ -9,6 +9,7 @@ from codex_ticket_dashboard.domain.events import ValidatedProjectId, ValidatedSe
 
 Digest = Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
 Reference = Annotated[str, Field(min_length=1, max_length=240)]
+PolicySnapshotId = Annotated[str, Field(pattern=r"^pol_[0-9a-f]{24}$")]
 
 
 @final
@@ -60,6 +61,13 @@ class RegistrationUpgrade(ClosedModel):
     previous_project_version: int = Field(gt=0)
 
 
+class PolicyEvidenceRenewal(ClosedModel):
+    """Pin the exact existing policy row approved for evidence-only renewal."""
+
+    previous_evidence_hash: Digest
+    previous_policy_snapshot_id: PolicySnapshotId
+
+
 class TaskAuthority(ClosedModel):
     """One approved current-project scope with no mutation authority above status observation."""
 
@@ -78,6 +86,7 @@ class TaskAuthority(ClosedModel):
     authorizing_session_id: ValidatedSessionId
     provenance: FilePin
     registration_upgrade: RegistrationUpgrade | None = None
+    policy_evidence_renewal: PolicyEvidenceRenewal | None = None
 
 
 class RegistrationRecord(BaseModel):

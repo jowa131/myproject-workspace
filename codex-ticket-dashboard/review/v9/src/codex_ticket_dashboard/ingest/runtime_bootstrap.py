@@ -4,10 +4,10 @@ import json
 import sqlite3
 from datetime import UTC, datetime
 from hashlib import sha256
-from typing import Final
+from typing import assert_never
 from uuid import UUID
 
-from pydantic import BaseModel, TypeAdapter
+from pydantic import BaseModel
 
 from codex_ticket_dashboard.compliance.runtime_authority import VerifiedRuntimeAuthority
 from codex_ticket_dashboard.compliance.runtime_authority_models import RuntimeAuthorityError
@@ -34,21 +34,13 @@ from codex_ticket_dashboard.ingest.dead_letter import (
 )
 from codex_ticket_dashboard.ingest.payload_models import ProjectPayload, ReviewSignalPayload
 from codex_ticket_dashboard.ingest.payloads import canonical_payload_json
+from codex_ticket_dashboard.ingest.runtime_bootstrap_state import (
+    RuntimeBootstrapAction,
+    bootstrap_event_id,
+    evaluate_runtime_bootstrap_state,
+)
 from codex_ticket_dashboard.storage.database import Database
 from codex_ticket_dashboard.storage.models import ProjectChange, ProjectionWrite
-
-_PROJECT: Final[TypeAdapter[tuple[str, str, str, str, str, int] | None]] = TypeAdapter(
-    tuple[str, str, str, str, str, int] | None
-)
-_POLICY: Final[TypeAdapter[tuple[str, str, str, str, str, str] | None]] = TypeAdapter(
-    tuple[str, str, str, str, str, str] | None
-)
-_COUNT: Final = TypeAdapter(tuple[int])
-_BOOTSTRAP_EVENT_COUNT: Final = 2
-
-
-def _event_id(key: str) -> EventId:
-    return EventId("evt_" + str(UUID(bytes=sha256(key.encode()).digest()[:16], version=4)))
 
 
 def _envelope[PayloadT: BaseModel](
@@ -62,7 +54,7 @@ def _envelope[PayloadT: BaseModel](
     encoded = json.dumps(payload.model_dump(mode="json"), sort_keys=True, separators=(",", ":"))
     return EventEnvelope[PayloadT](
         schema_version=1,
-        event_id=_event_id(key),
+        event_id=bootstrap_event_id(authority.declaration_sha256, kind),
         event_type=kind,
         occurred_at=datetime.now(UTC),
         received_at=None,
@@ -139,7 +131,6 @@ def _append[PayloadT: BaseModel](
 def bootstrap_runtime(database: Database, authority: VerifiedRuntimeAuthority) -> None:
     """Commit both canonical collector events and projections once, preserving existing history."""
     entry = authority.declaration
-    policy = authority.policy
     repo_key = authority.resolution.repo_key
     if repo_key is None:
         raise RuntimeAuthorityError(code="REPO_IDENTITY_REQUIRED")
@@ -164,60 +155,12 @@ def bootstrap_runtime(database: Database, authority: VerifiedRuntimeAuthority) -
         ),
         identity.event_id,
     )
-    expected_project = (project.label, root_key, repo_key, "REGISTRY", project.identity_source_hash)
-    expected_policy = (
-        policy.wiki_requirement.value,
-        policy.git_requirement.value,
-        policy.authority_ceiling.value,
-        policy.source_ref,
-        policy.source_sha256,
-        policy.snapshot_id,
-    )
     with database.transaction() as connection:
-        current_project = _PROJECT.validate_python(
-            connection.execute(
-                """SELECT label,logical_root_key,repo_key,identity_source,
-                identity_source_hash,version
-                FROM projects WHERE id=?""",
-                (entry.project_id,),
-            ).fetchone()
-        )
-        current_policy = _POLICY.validate_python(
-            connection.execute(
-                """SELECT wiki_authority,git_authority,authority_ceiling,evidence_ref,evidence_hash,
-                policy_snapshot_id FROM project_policies WHERE project_id=?""",
-                (entry.project_id,),
-            ).fetchone()
-        )
-        upgrade = entry.registration_upgrade
-        changing_registration = (
-            current_project is not None and current_project[:5] != expected_project
-        )
-        if changing_registration and (
-            upgrade is None
-            or current_project is None
-            or current_project[:4] != expected_project[:4]
-            or current_project[4] != upgrade.previous_identity_source_hash
-            or current_project[5] != upgrade.previous_project_version
-            or current_policy is not None
-        ):
-            raise RuntimeAuthorityError(code="BOOTSTRAP_REGISTRATION_UPGRADE_REJECTED")
-        if current_policy is not None and current_policy != expected_policy:
-            raise RuntimeAuthorityError(code="BOOTSTRAP_EXISTING_STATE_MISMATCH")
-        count = _COUNT.validate_python(
-            connection.execute(
-                "SELECT COUNT(*) FROM ticket_events WHERE event_id IN (?,?)",
-                (identity.event_id, resolved.event_id),
-            ).fetchone()
-        )[0]
-        if count:
-            if count != _BOOTSTRAP_EVENT_COUNT or current_project is None or current_policy is None:
-                raise RuntimeAuthorityError(code="BOOTSTRAP_STATE_INCOMPLETE")
+        decision = evaluate_runtime_bootstrap_state(connection, authority)
+        if decision.action is RuntimeBootstrapAction.UNCHANGED:
             return
-        if upgrade is not None and not changing_registration:
-            raise RuntimeAuthorityError(code="BOOTSTRAP_REGISTRATION_UPGRADE_REJECTED")
         sequence = next_ingest_sequence(connection)
-        if current_project is None or changing_registration:
+        if decision.write_project:
             database.write_projection(
                 connection,
                 ProjectionWrite(
@@ -234,9 +177,28 @@ def bootstrap_runtime(database: Database, authority: VerifiedRuntimeAuthority) -
                 ),
             )
         _append(connection, identity, sequence)
-        if current_policy is None:
-            _ = connection.execute(
-                "INSERT INTO project_policies VALUES (?,?,?,?,?,?,?,?)",
-                (entry.project_id, *expected_policy, resolved.occurred_at.isoformat()),
-            )
+        match decision.action:
+            case RuntimeBootstrapAction.INITIALIZE | RuntimeBootstrapAction.REGISTRATION_UPGRADE:
+                if decision.insert_policy:
+                    _ = connection.execute(
+                        "INSERT INTO project_policies VALUES (?,?,?,?,?,?,?,?)",
+                        (
+                            entry.project_id,
+                            *decision.expected_policy,
+                            resolved.occurred_at.isoformat(),
+                        ),
+                    )
+            case RuntimeBootstrapAction.POLICY_EVIDENCE_RENEWAL:
+                _ = connection.execute(
+                    """UPDATE project_policies SET wiki_authority=?,git_authority=?,
+                    authority_ceiling=?,evidence_ref=?,evidence_hash=?,policy_snapshot_id=?,
+                    resolved_at=? WHERE project_id=?""",
+                    (
+                        *decision.expected_policy,
+                        resolved.occurred_at.isoformat(),
+                        entry.project_id,
+                    ),
+                )
+            case unreachable:
+                assert_never(unreachable)
         _append(connection, resolved, next_ingest_sequence(connection))
