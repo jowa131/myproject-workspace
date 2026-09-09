@@ -52,13 +52,17 @@ class _PrivacySafeMCPServer(MCPServer[None]):
                     if isinstance(definition, dict):
                         required = definition.get("required")
                         if isinstance(required, list):
-                            optional = {"context"}
+                            server_bound = {"context"}
                             if schema_name == "TicketStatusUpdateRequest":
-                                optional.add("transition_turn_id")
-                            optional.update(GENERATED_FIELDS.get(schema_name, ()))
+                                server_bound.add("transition_turn_id")
+                            server_bound.update(GENERATED_FIELDS.get(schema_name, ()))
                             definition["required"] = [
-                                item for item in required if item not in optional
+                                item for item in required if item not in server_bound
                             ]
+                            properties = definition.get("properties")
+                            if self._resolver is not None and isinstance(properties, dict):
+                                for field in server_bound:
+                                    properties.pop(field, None)
             tool.input_schema = schema
         return listed
 

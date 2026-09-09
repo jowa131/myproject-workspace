@@ -1,0 +1,78 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "^(startup|resume|compact|clear)$",
+        "hooks": [
+          {
+            "timeout": 2,
+            "command": "& 'C:/REPLACE_WITH_PROTECTED_RUNTIME/observe.cmd' 'C:/REPLACE_WITH_PROTECTED_RUNTIME/python.exe' 'C:/REPLACE_WITH_APPROVED_CONFIG/dashboard.toml' 'REPLACE_WITH_HOST_ID' 'unknown'; exit $LASTEXITCODE",
+            "commandWindows": "& 'C:/REPLACE_WITH_PROTECTED_RUNTIME/observe.cmd' 'C:/REPLACE_WITH_PROTECTED_RUNTIME/python.exe' 'C:/REPLACE_WITH_APPROVED_CONFIG/dashboard.toml' 'REPLACE_WITH_HOST_ID' 'unknown'; exit $LASTEXITCODE",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "timeout": 5,
+            "command": "& 'C:/REPLACE_WITH_PROTECTED_RUNTIME/observe.cmd' 'C:/REPLACE_WITH_PROTECTED_RUNTIME/python.exe' 'C:/REPLACE_WITH_APPROVED_CONFIG/dashboard.toml' 'REPLACE_WITH_HOST_ID' 'unknown'; exit $LASTEXITCODE",
+            "commandWindows": "& 'C:/REPLACE_WITH_PROTECTED_RUNTIME/observe.cmd' 'C:/REPLACE_WITH_PROTECTED_RUNTIME/python.exe' 'C:/REPLACE_WITH_APPROVED_CONFIG/dashboard.toml' 'REPLACE_WITH_HOST_ID' 'unknown'; exit $LASTEXITCODE",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "timeout": 5,
+            "command": "& 'C:/REPLACE_WITH_PROTECTED_RUNTIME/observe.cmd' 'C:/REPLACE_WITH_PROTECTED_RUNTIME/python.exe' 'C:/REPLACE_WITH_APPROVED_CONFIG/dashboard.toml' 'REPLACE_WITH_HOST_ID' 'unknown'; exit $LASTEXITCODE",
+            "commandWindows": "& 'C:/REPLACE_WITH_PROTECTED_RUNTIME/observe.cmd' 'C:/REPLACE_WITH_PROTECTED_RUNTIME/python.exe' 'C:/REPLACE_WITH_APPROVED_CONFIG/dashboard.toml' 'REPLACE_WITH_HOST_ID' 'unknown'; exit $LASTEXITCODE",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "timeout": 3,
+            "command": "& 'C:/REPLACE_WITH_PROTECTED_RUNTIME/observe.cmd' 'C:/REPLACE_WITH_PROTECTED_RUNTIME/python.exe' 'C:/REPLACE_WITH_APPROVED_CONFIG/dashboard.toml' 'REPLACE_WITH_HOST_ID' 'unknown'; exit $LASTEXITCODE",
+            "commandWindows": "& 'C:/REPLACE_WITH_PROTECTED_RUNTIME/observe.cmd' 'C:/REPLACE_WITH_PROTECTED_RUNTIME/python.exe' 'C:/REPLACE_WITH_APPROVED_CONFIG/dashboard.toml' 'REPLACE_WITH_HOST_ID' 'unknown'; exit $LASTEXITCODE",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "timeout": 3,
+            "command": "& 'C:/REPLACE_WITH_PROTECTED_RUNTIME/observe.cmd' 'C:/REPLACE_WITH_PROTECTED_RUNTIME/python.exe' 'C:/REPLACE_WITH_APPROVED_CONFIG/dashboard.toml' 'REPLACE_WITH_HOST_ID' 'unknown'; exit $LASTEXITCODE",
+            "commandWindows": "& 'C:/REPLACE_WITH_PROTECTED_RUNTIME/observe.cmd' 'C:/REPLACE_WITH_PROTECTED_RUNTIME/python.exe' 'C:/REPLACE_WITH_APPROVED_CONFIG/dashboard.toml' 'REPLACE_WITH_HOST_ID' 'unknown'; exit $LASTEXITCODE",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "timeout": 3,
+            "command": "& 'C:/REPLACE_WITH_PROTECTED_RUNTIME/observe.cmd' 'C:/REPLACE_WITH_PROTECTED_RUNTIME/python.exe' 'C:/REPLACE_WITH_APPROVED_CONFIG/dashboard.toml' 'REPLACE_WITH_HOST_ID' 'unknown'; exit $LASTEXITCODE",
+            "commandWindows": "& 'C:/REPLACE_WITH_PROTECTED_RUNTIME/observe.cmd' 'C:/REPLACE_WITH_PROTECTED_RUNTIME/python.exe' 'C:/REPLACE_WITH_APPROVED_CONFIG/dashboard.toml' 'REPLACE_WITH_HOST_ID' 'unknown'; exit $LASTEXITCODE",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  },
+  "description": "INACTIVE WINDOWS POWERSHELL HOST EXAMPLE ONLY. Uses the Host-provided PowerShell; no nested shell. Requires separately pinned runtime, approved registry, protected data root, and per-event budgets: 5s for UserPromptSubmit and Stop, 2s for SessionStart, and 3s for SessionEnd, SubagentStart, and SubagentStop. These are configuration requirements, not a claim of host verification. Do not install into a cmd/bash Host."
+}
