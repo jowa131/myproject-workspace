@@ -1,8 +1,10 @@
 """Cross-process Windows spool admission lock."""
 
+import errno
 import msvcrt
 from dataclasses import dataclass
 from pathlib import Path
+from time import monotonic, sleep
 from types import TracebackType
 from typing import BinaryIO, Self, final, override
 
@@ -71,11 +73,22 @@ class AdmissionLock:
         self._file: BinaryIO | None = None
 
     def __enter__(self) -> Self:
-        """Acquire the blocking one-byte cross-process lock."""
+        """Acquire the one-byte lock within a fixed 250ms contention budget."""
         file = self._path.open("r+b", buffering=0)
         _ = file.seek(0)
         try:
-            msvcrt.locking(file.fileno(), msvcrt.LK_LOCK, 1)
+            deadline = monotonic() + 0.25
+            while True:
+                try:
+                    msvcrt.locking(file.fileno(), msvcrt.LK_NBLCK, 1)
+                    break
+                except OSError as error:
+                    remaining = deadline - monotonic()
+                    if error.errno != errno.EACCES or remaining <= 0:
+                        raise
+                    sleep(min(0.01, remaining))
+                    if monotonic() >= deadline:
+                        raise
         except OSError as error:
             file.close()
             raise AdmissionLockError from error

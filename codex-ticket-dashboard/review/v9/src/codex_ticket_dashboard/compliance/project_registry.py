@@ -133,19 +133,24 @@ class ProjectRegistry:
     ) -> None:
         """Build a deterministic in-memory snapshot without changing config."""
         self._canonicalizer = canonicalizer or DefaultWindowsPathCanonicalizer()
-        self._entries = entries
-        ordered_entries = tuple(sorted(entries, key=lambda item: item.project_id))
+        self._canonical_entries = tuple(
+            (
+                entry,
+                tuple(self._canonicalizer.canonicalize(root) for root in entry.roots),
+                tuple(self._canonicalizer.canonicalize(root) for root in entry.worktree_roots),
+            )
+            for entry in entries
+        )
+        ordered_entries = tuple(
+            sorted(self._canonical_entries, key=lambda item: item[0].project_id)
+        )
         projects = tuple(
             RegistryProjectSnapshot(
                 project_id=entry.project_id,
-                canonical_roots=tuple(
-                    self._canonicalizer.canonicalize(root).display for root in entry.roots
-                ),
-                canonical_worktree_roots=tuple(
-                    self._canonicalizer.canonicalize(root).display for root in entry.worktree_roots
-                ),
+                canonical_roots=tuple(root.display for root in roots),
+                canonical_worktree_roots=tuple(root.display for root in worktree_roots),
             )
-            for entry in ordered_entries
+            for entry, roots, worktree_roots in ordered_entries
         )
         encoded = json.dumps(
             [
@@ -159,7 +164,7 @@ class ProjectRegistry:
                     "wiki_authority": entry.wiki_authority,
                     "worktree_roots": project.canonical_worktree_roots,
                 }
-                for entry, project in zip(ordered_entries, projects, strict=True)
+                for (entry, _, _), project in zip(ordered_entries, projects, strict=True)
             ],
             ensure_ascii=True,
             separators=(",", ":"),
@@ -192,11 +197,11 @@ class ProjectRegistry:
             )
         matches = tuple(
             entry
-            for entry in self._entries
+            for entry, roots, worktree_roots in self._canonical_entries
             if any(
-                not (canonical_root := self._canonicalizer.canonicalize(root)).contains_reparse
+                not canonical_root.contains_reparse
                 and _contains(canonical_root, cwd)
-                for root in (*entry.roots, *entry.worktree_roots)
+                for canonical_root in (*roots, *worktree_roots)
             )
         )
         common_dir = (
