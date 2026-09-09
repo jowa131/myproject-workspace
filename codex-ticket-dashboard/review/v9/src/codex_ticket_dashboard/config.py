@@ -1,19 +1,14 @@
 """Typed dashboard registry configuration boundary and check command."""
 
+import argparse
+import sys
 from dataclasses import dataclass
 from enum import StrEnum, unique
 from pathlib import Path, PurePosixPath
-from tomllib import TOMLDecodeError
+from tomllib import TOMLDecodeError, load
 from typing import Annotated, ClassVar, Literal, Self, override
 
-import typer
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator, model_validator
-from pydantic_settings import (
-    BaseSettings,
-    SettingsConfigDict,
-    SettingsError,
-    TomlConfigSettingsSource,
-)
 
 from codex_ticket_dashboard.domain.identifiers import ProjectId, parse_project_id
 
@@ -82,10 +77,10 @@ class ProjectRegistryEntry(BaseModel):
         return value
 
 
-class DashboardConfig(BaseSettings):
+class DashboardConfig(BaseModel):
     """Validated dashboard configuration loaded from an explicit TOML file."""
 
-    model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(frozen=True, extra="forbid")
+    model_config: ClassVar[ConfigDict] = ConfigDict(frozen=True, extra="forbid")
 
     schema_version: Literal[1]
     data_root: Path
@@ -126,9 +121,10 @@ class ConfigCheckOutput(BaseModel):
 def load_dashboard_config(path: Path) -> DashboardConfig:
     """Load and validate an explicit dashboard TOML file."""
     try:
-        source = TomlConfigSettingsSource(DashboardConfig, toml_file=path)
-        return DashboardConfig.model_validate(source())
-    except (OSError, SettingsError, TOMLDecodeError) as error:
+        with path.open("rb") as stream:
+            source = load(stream)
+        return DashboardConfig.model_validate(source)
+    except (OSError, TOMLDecodeError, UnicodeError) as error:
         raise ConfigLoadError(code="CONFIG_INVALID", field_path="$", issue_count=1) from error
     except ValidationError as error:
         raise ConfigLoadError(
@@ -148,15 +144,30 @@ def check_config(path: Path) -> ConfigCheckOutput:
     )
 
 
-def main(check: Annotated[Path, typer.Option("--check")]) -> None:
+def main(check: Path) -> None:
     """Validate a dashboard configuration without creating runtime artifacts."""
     try:
         output = check_config(check)
     except ConfigLoadError as error:
-        typer.echo(str(error), err=True)
-        raise typer.Exit(code=2) from None
-    typer.echo(output.model_dump_json())
+        _ = sys.stderr.write(f"{error}\n")
+        raise SystemExit(2) from None
+    _ = sys.stdout.write(f"{output.model_dump_json()}\n")
+
+
+class _Arguments(argparse.Namespace):
+    def __init__(self) -> None:
+        super().__init__()
+        self.check: Path = Path()
+
+
+def cli() -> None:
+    """Run the explicit ``--check`` configuration command for module callers and tests."""
+    parser = argparse.ArgumentParser()
+    _ = parser.add_argument("--check", required=True, type=Path)
+    arguments = _Arguments()
+    _ = parser.parse_args(namespace=arguments)
+    main(arguments.check)
 
 
 if __name__ == "__main__":
-    typer.run(main)
+    cli()

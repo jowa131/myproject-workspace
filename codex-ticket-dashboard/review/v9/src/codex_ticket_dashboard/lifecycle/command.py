@@ -1,11 +1,11 @@
 """Local nonblocking lifecycle Hook entrypoint with redacted failure output."""
 
+import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Annotated
+from typing import Never, override
 
-import typer
 from pydantic import TypeAdapter, ValidationError
 
 from codex_ticket_dashboard.compliance.project_registry import ProjectResolution
@@ -65,11 +65,7 @@ def observe(raw: bytes, config: Path, source_host: str, source_kind: SourceKind)
     return _observe(data_root_paths(settings.data_root), hook, identity)
 
 
-def main(
-    config: Annotated[Path, typer.Option("--config")],
-    source_host: Annotated[str, typer.Option("--source-host")],
-    source_kind: Annotated[str, typer.Option("--source-kind")] = "unknown",
-) -> None:
+def main(config: Path, source_host: str, source_kind: str = "unknown") -> None:
     """Emit fixed admitted input guidance; expected failures never block the parent turn."""
     code: ResultCode = "OBSERVER_INTERNAL_ERROR"
     paths: DataRootPaths | None = None
@@ -89,7 +85,7 @@ def main(
         stage = "ADMISSION"
         response = _observe(paths, hook, identity)
         if response is not None:
-            typer.echo(response)
+            _ = sys.stdout.write(f"{response}\n")
     except ObservationError as error:
         code = error.code
     except ConfigLoadError:
@@ -107,9 +103,37 @@ def main(
         return
     if paths is not None:
         publish_command_diagnostic(paths, context, ("FAILED", stage, code))
-    typer.echo(json.dumps({"code": code, "recording": "UNVERIFIED"}), err=True)
-    raise typer.Exit(code=1)
+    _ = sys.stderr.write(json.dumps({"code": code, "recording": "UNVERIFIED"}) + "\n")
+    raise SystemExit(1)
+
+
+class _Arguments(argparse.Namespace):
+    def __init__(self) -> None:
+        super().__init__()
+        self.config: Path = Path()
+        self.source_host: str = ""
+        self.source_kind: str = "unknown"
+
+
+class _Parser(argparse.ArgumentParser):
+    @override
+    def error(self, message: str) -> Never:
+        _ = message
+        output = json.dumps({"code": "INPUT_INVALID", "recording": "UNVERIFIED"})
+        _ = sys.stderr.write(f"{output}\n")
+        raise SystemExit(1)
+
+
+def cli() -> None:
+    """Run the Hook command with fixed redacted argument errors for module callers and tests."""
+    parser = _Parser()
+    _ = parser.add_argument("--config", required=True, type=Path)
+    _ = parser.add_argument("--source-host", required=True)
+    _ = parser.add_argument("--source-kind", default="unknown")
+    arguments = _Arguments()
+    _ = parser.parse_args(namespace=arguments)
+    main(arguments.config, arguments.source_host, arguments.source_kind)
 
 
 if __name__ == "__main__":
-    typer.run(main)
+    cli()
