@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="로컬 읽기 전용 Codex 작업 티켓 관찰 화면">
+  <title>Codex 작업 관찰</title>
+  <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body{% if view == 'activities' %} class="activity-view"{% endif %}>
+  <a class="skip-link" href="#content">본문으로 건너뛰기</a>
+  <div class="shell">
+    <aside class="sidebar">
+      <header class="brand"><p class="eyebrow">로컬 관찰자</p><h1>작업 티켓</h1></header>
+      <nav aria-label="주 탐색">
+        <a href="/" {% if view == 'projects' %}aria-current="page"{% endif %}>프로젝트</a>
+        <a href="/board" {% if view == 'board' %}aria-current="page"{% endif %}>보드</a>
+        <a href="/activities" {% if view == 'activities' %}aria-current="page"{% endif %}>자동 관측 활동</a>
+        <a href="/compliance" {% if view == 'compliance' %}aria-current="page"{% endif %}>준수</a>
+        <a href="/ingest/issues" {% if view == 'issues' %}aria-current="page"{% endif %}>수집 이슈</a>
+      </nav>
+      <p class="muted">읽기 전용 · 로컬 전용</p>
+      <section class="pipeline-status sidebar-pipeline" aria-label="로컬 파이프라인 상태"><span>Codex</span><span aria-hidden="true">→</span><span>spool</span><span aria-hidden="true">→</span><span>SQLite</span><span aria-hidden="true">→</span><strong>관찰</strong></section>
+    </aside>
+    <div class="workspace">
+      <header class="topbar" aria-label="현재 관찰 상태">
+        <span class="topbar-status"><span class="status-dot" aria-hidden="true"></span>로컬 읽기 전용 관찰</span>
+        <span>스냅샷 {{ activity_page.snapshot_high_watermark if view == 'activities' and activity_page else summary.watermark }}</span>
+        <span>변경 API 없음</span>
+      </header>
+      <main id="content" tabindex="-1">
+      <header class="page-header">
+        <div><p class="eyebrow">읽기 전용 작업 관찰</p><h2 id="page-title">{% if view == 'projects' %}프로젝트 현황{% elif view == 'board' %}작업 보드{% elif view == 'activities' %}자동 관측 활동{% elif view == 'compliance' %}준수 게이트{% elif view == 'issues' %}수집 이슈{% elif view == 'ticket' %}티켓 상세{% else %}티켓을 찾을 수 없습니다{% endif %}</h2></div>
+        <span class="badge neutral">관찰만 가능</span>
+      </header>
+      {% if summary.triage_count or summary.issues|length %}
+      <section class="warning" role="alert"><strong>주의 필요</strong><span>분류 필요 {{ summary.triage_count }}건 · 열린 수집 이슈 {{ summary.issues|length }}건</span></section>
+      {% endif %}
+      {% if view == 'activities' %}
+      {% include 'activities.html' %}
+      {% elif view == 'projects' %}
+      <section class="metrics" aria-label="요약"><article><b>{{ summary.projects|length }}</b><span>프로젝트</span></article><article><b>{{ summary.tickets|length }}</b><span>티켓</span></article><article><b>{{ summary.gates|length }}</b><span>준수 게이트</span></article><article><b>{{ summary.triage_count }}</b><span>분류 필요</span></article></section>
+      <section class="panel" aria-labelledby="project-list-title"><h3 id="project-list-title">프로젝트</h3>{% if summary.projects %}<div class="table-wrap"><table><thead><tr><th>이름</th><th>프로젝트 ID</th><th>식별 상태</th></tr></thead><tbody>{% for item in summary.projects %}<tr><td><a href="/board">{{ item.label }}</a></td><td><code>{{ item.project_id }}</code></td><td>{% if summary.unresolved_identity_issues %}<span class="badge warn">확인 필요</span>{% else %}<span class="badge neutral">등록 관측됨</span>{% endif %}</td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="empty">표시할 프로젝트가 없습니다. 수집 상태를 확인하십시오.</p>{% endif %}</section>
+      {% elif view == 'board' %}
+      <section class="board" aria-label="티켓 상태 보드">{% for status in ['PLANNED','IN_PROGRESS','IN_REVIEW','BLOCKED'] %}<section class="panel lane" aria-labelledby="lane-{{ status }}"><h3 id="lane-{{ status }}">{{ status }}</h3>{% for item in summary.tickets if item.status == status %}<a class="ticket" href="/tickets/{{ item.ticket_id }}"><span class="badge {{ 'warn' if item.needs_triage else 'neutral' }}">{{ item.status }}</span><strong class="ticket-title">{{ item.title }}</strong><small>{{ item.record_type }}{% if item.needs_triage %} · 분류 필요{% endif %}</small><small>{{ item.next_step }}</small></a>{% else %}<p class="empty">현재 항목 없음</p>{% endfor %}</section>{% endfor %}</section>
+      {% elif view == 'compliance' %}
+      <section class="panel" aria-labelledby="gate-list-title"><h3 id="gate-list-title">게이트 목록</h3>{% if summary.gates %}<div class="table-wrap"><table><thead><tr><th>유형</th><th>요구 수준</th><th>게이트 ID</th><th>상태</th></tr></thead><tbody>{% for item in summary.gates %}<tr><td>{{ item.gate_type }}</td><td>{{ item.requirement }}</td><td><code>{{ item.gate_id }}</code></td><td><span class="badge {{ 'ok' if item.status in ['SATISFIED','N/A'] else 'warn' }}">{{ item.status }}</span></td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="empty">표시할 준수 게이트가 없습니다.</p>{% endif %}</section>
+      {% elif view == 'issues' %}
+      <section class="panel" aria-labelledby="issue-list-title"><h3 id="issue-list-title">수집 이슈</h3>{% if summary.issues %}<div class="table-wrap"><table><thead><tr><th>코드</th><th>필드</th><th>이슈 ID</th><th>상태</th></tr></thead><tbody>{% for item in summary.issues %}<tr><td>{{ item.code }}</td><td>{{ item.field_path }}</td><td><code>{{ item.issue_id }}</code></td><td><span class="badge warn">{{ item.state }}</span></td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="empty">열린 수집 이슈가 없습니다.</p>{% endif %}</section>
+      {% elif view == 'ticket' %}
+      <article class="panel ticket-detail" aria-labelledby="ticket-title"><div class="badge-row"><span class="badge neutral">{{ detail.status }}</span><span class="badge {{ 'warn' if detail.needs_triage else 'neutral' }}">{{ detail.record_type }}</span>{% if detail.needs_triage %}<span class="badge warn">분류 필요</span>{% endif %}</div><h3 id="ticket-title">{{ detail.title }}</h3><p>{{ detail.summary }}</p><h4>연결 세션·스레드 ID</h4>{% if detail.session_ids %}<ul class="copy-list">{% for item in detail.session_ids %}<li><code tabindex="0">{{ item }}</code><small>키보드로 값에 초점을 둔 뒤 선택하여 복사하십시오.</small></li>{% endfor %}</ul>{% else %}<p class="empty">연결 세션·스레드 ID가 없습니다.</p>{% endif %}<h4>다음 단계</h4><p>{{ detail.next_step }}</p><h4>작업 항목</h4>{% if detail.work_items %}<ul class="stack-list">{% for item in detail.work_items %}<li><span>{{ item.summary }}</span><span class="badge neutral">{{ item.status }}</span></li>{% endfor %}</ul>{% else %}<p class="empty">활성 작업 항목이 없습니다.</p>{% endif %}</article>
+      <section class="panel" aria-labelledby="ticket-gate-title"><h3 id="ticket-gate-title">티켓 준수 게이트</h3>{% if detail.compliance_gates %}<div class="table-wrap"><table><thead><tr><th>유형</th><th>요구 수준</th><th>상태</th></tr></thead><tbody>{% for item in detail.compliance_gates %}<tr><td>{{ item.gate_type }}</td><td>{{ item.requirement }}</td><td><span class="badge {{ 'ok' if item.status in ['SATISFIED','N/A'] else 'warn' }}">{{ item.status }}</span></td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="empty">연결된 준수 게이트가 없습니다.</p>{% endif %}</section>
+      <section class="panel" aria-labelledby="timeline-title"><h3 id="timeline-title">시간선</h3>{% if events %}<ol class="timeline">{% for item in events %}<li><div><strong>{{ item.event_type }}</strong><small>{{ item.occurred_at }} · {{ item.authority }}</small></div><code>{{ item.ingest_seq }}</code></li>{% endfor %}</ol>{% else %}<p class="empty">표시할 사건이 없습니다.</p>{% endif %}</section>
+      {% else %}
+      <section class="panel" aria-labelledby="ticket-not-found-title"><h3 id="ticket-not-found-title">티켓을 찾을 수 없습니다</h3><p class="empty">요청한 티켓은 현재 관찰 스냅샷에 없습니다.</p><p class="muted">보드에서 현재 관찰 중인 티켓을 확인하십시오.</p></section>
+      {% endif %}
+      </main>
+      <aside class="observer-rail" aria-label="관찰자 상태">
+        {% if view == 'activities' %}
+        <section class="rail-section"><p class="eyebrow">관측 범위</p><h2>확인된 사건만 표시</h2><p class="muted">관측되지 않은 작업과 기간은 확인할 수 없습니다. 기록 없음은 정상 동작의 증거가 아닙니다.</p></section>
+        <section class="rail-section"><h3>기록 상태 읽기</h3><p>수집 대기: 저장 반영 확인이 필요합니다.</p><p>필수 기록 누락: 필요한 기록이 확인되지 않았습니다.</p><p>연결 기록 확인: 정확히 연결된 티켓 기록이 있습니다.</p></section>
+        <section class="rail-section"><h3>사용자 결정은 별도</h3><p class="muted">응답 정지는 관측된 사건입니다. 작업 완료와 사용자 수락은 연결 티켓의 결과와 결정 기록으로 확인하십시오.</p><a href="/board">티켓 보드 확인</a></section>
+        {% else %}
+        <section class="rail-section"><p class="eyebrow">신선도</p><h2>스냅샷 {{ summary.watermark }}</h2><p class="muted">표시 값은 현재 읽기 모델의 고정 순서입니다.</p></section>
+        <section class="rail-section"><h3>식별·분류</h3>{% if summary.unresolved_identity_issues %}{% for item in summary.unresolved_identity_issues %}<p class="rail-alert"><span class="badge warn">{{ item.code }}</span><span>{{ item.field_path }} · {{ item.state }}</span></p>{% endfor %}{% else %}<p class="rail-ok">현재 열린 식별 이슈가 없습니다.</p>{% endif %}</section>
+        <section class="rail-section"><h3>준수·정책</h3>{% if summary.policy_warnings %}{% for item in summary.policy_warnings %}<p class="rail-alert"><span class="badge warn">{{ item.status }}</span><span>{{ item.gate_type }} · {{ item.requirement }}</span></p>{% endfor %}{% endif %}{% for item in summary.policy_issues %}<p class="rail-alert"><span class="badge warn">{{ item.code }}</span><span>{{ item.field_path }} · {{ item.state }}</span></p>{% endfor %}{% if not summary.policy_warnings and not summary.policy_issues %}<p class="rail-ok">현재 미충족 준수 게이트가 없습니다.</p>{% endif %}</section>
+        <section class="rail-section"><h3>의존성</h3>{% if summary.dependency_issues %}{% for item in summary.dependency_issues %}<p class="rail-alert"><span class="badge warn">{{ item.code }}</span><span>{{ item.field_path }} · {{ item.state }}</span></p>{% endfor %}{% else %}<p class="rail-ok">현재 열린 의존성 이슈가 없습니다.</p>{% endif %}</section>
+        <section class="rail-section"><h3>수집·저장소</h3>{% if summary.stale_database_issues %}{% for item in summary.stale_database_issues %}<p class="rail-alert"><span class="badge warn">{{ item.code }}</span><span>{{ item.field_path }}</span></p>{% endfor %}{% elif summary.issues %}<p class="rail-alert"><span class="badge warn">열린 이슈 {{ summary.issues|length }}</span><span>수집 이슈 화면에서 상세를 확인하십시오.</span></p>{% else %}<p class="rail-ok">열린 수집 이슈가 없습니다.</p>{% endif %}</section>
+        {% endif %}
+        <section class="pipeline-status" aria-label="로컬 파이프라인 상태"><span>Codex</span><span aria-hidden="true">→</span><span>spool</span><span aria-hidden="true">→</span><span>SQLite</span><span aria-hidden="true">→</span><strong>관찰</strong></section>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>

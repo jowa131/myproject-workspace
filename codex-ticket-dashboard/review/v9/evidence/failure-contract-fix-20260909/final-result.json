@@ -1,0 +1,31 @@
+{
+  "finished_at_kst": "2026-09-09T01:43:28.292149+09:00",
+  "status": "SOURCE_FIXED_FOCUSED_PASS_HOST_ACTIVATION_PENDING_USER_STOP",
+  "source_freeze_preserved": true,
+  "source_changes": 6,
+  "worker_count": 1,
+  "worker_model": "gpt-5.6-sol",
+  "worker_reasoning": "high",
+  "focused_unique_cases": 4,
+  "case_executions": 12,
+  "red_failed": 4,
+  "green_passed": 4,
+  "final_green_passed": 4,
+  "ruff": "PASS_WORKER_REPORTED",
+  "basedpyright": "0_ERRORS_WORKER_REPORTED",
+  "runtime_v9_installed_inactive": true,
+  "hook_file_restored": true,
+  "S_config_unchanged": true,
+  "global_config_unchanged": true,
+  "business_count_before": 24,
+  "counts_after": {
+    "business_count": 24,
+    "observation_count": 69
+  },
+  "live_native_requests": 0,
+  "user_stopped_computer_use": true,
+  "agent_model_selection_changes": 0,
+  "service_stop_restart_actions": 0,
+  "product_automatic_registration": "UNVERIFIED",
+  "next": "Official owned Hook trust/activation and observable single native request; no repeat checks of unchanged source"
+}

@@ -1,0 +1,77 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "^(startup|resume|compact|clear)$",
+        "hooks": [
+          {
+            "timeout": 2,
+            "command": "& 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/product-20260909-v9/src/observe.cmd' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/deps-20260909-v9/python.exe' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/qa-activation-20260908/dashboard.toml' 'local' 'unknown'; exit $LASTEXITCODE",
+            "commandWindows": "& 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/product-20260909-v9/src/observe.cmd' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/deps-20260909-v9/python.exe' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/qa-activation-20260908/dashboard.toml' 'local' 'unknown'; exit $LASTEXITCODE",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "timeout": 3,
+            "command": "& 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/product-20260909-v9/src/observe.cmd' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/deps-20260909-v9/python.exe' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/qa-activation-20260908/dashboard.toml' 'local' 'unknown'; exit $LASTEXITCODE",
+            "commandWindows": "& 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/product-20260909-v9/src/observe.cmd' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/deps-20260909-v9/python.exe' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/qa-activation-20260908/dashboard.toml' 'local' 'unknown'; exit $LASTEXITCODE",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "timeout": 3,
+            "command": "& 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/product-20260909-v9/src/observe.cmd' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/deps-20260909-v9/python.exe' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/qa-activation-20260908/dashboard.toml' 'local' 'unknown'; exit $LASTEXITCODE",
+            "commandWindows": "& 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/product-20260909-v9/src/observe.cmd' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/deps-20260909-v9/python.exe' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/qa-activation-20260908/dashboard.toml' 'local' 'unknown'; exit $LASTEXITCODE",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "timeout": 3,
+            "command": "& 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/product-20260909-v9/src/observe.cmd' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/deps-20260909-v9/python.exe' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/qa-activation-20260908/dashboard.toml' 'local' 'unknown'; exit $LASTEXITCODE",
+            "commandWindows": "& 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/product-20260909-v9/src/observe.cmd' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/deps-20260909-v9/python.exe' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/qa-activation-20260908/dashboard.toml' 'local' 'unknown'; exit $LASTEXITCODE",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "timeout": 3,
+            "command": "& 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/product-20260909-v9/src/observe.cmd' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/deps-20260909-v9/python.exe' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/qa-activation-20260908/dashboard.toml' 'local' 'unknown'; exit $LASTEXITCODE",
+            "commandWindows": "& 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/product-20260909-v9/src/observe.cmd' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/deps-20260909-v9/python.exe' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/qa-activation-20260908/dashboard.toml' 'local' 'unknown'; exit $LASTEXITCODE",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "timeout": 3,
+            "command": "& 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/product-20260909-v9/src/observe.cmd' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/deps-20260909-v9/python.exe' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/qa-activation-20260908/dashboard.toml' 'local' 'unknown'; exit $LASTEXITCODE",
+            "commandWindows": "& 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/product-20260909-v9/src/observe.cmd' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/deps-20260909-v9/python.exe' 'C:/MyProject/codex-ticket-dashboard/.omo/probes/correction-runtime-20260908/qa-activation-20260908/dashboard.toml' 'local' 'unknown'; exit $LASTEXITCODE",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  }
+}

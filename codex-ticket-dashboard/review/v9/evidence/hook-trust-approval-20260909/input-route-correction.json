@@ -1,0 +1,22 @@
+{
+  "at_kst": "2026-09-09T09:09:59.716880+09:00",
+  "turn_id": "01a08379-4178-7321-8d70-2d2857555f7d",
+  "duration_ms": 21174,
+  "diagnostics": 0,
+  "observations": 0,
+  "business_events": 0,
+  "input_route": "send_message_to_thread",
+  "prompt_carrier": "function_call_output:send_message_to_thread",
+  "user_content_item_kinds": [
+    "environments.environment_context"
+  ],
+  "ui_label": "다른 작업에서 ChatGPT이(가) 보냄",
+  "decision": "This request was not direct user input; do not use it to claim UserPromptSubmit invocation failure",
+  "new_check_reason": "Observed different message carrier justifies exactly one direct Desktop UI request after v9 activation",
+  "cost_revision": {
+    "tool_delivered_requests": 1,
+    "direct_ui_requests_max": 1,
+    "additional_tests_builds_workers": 0
+  },
+  "no_repeat": "No further request without new named cause evidence"
+}

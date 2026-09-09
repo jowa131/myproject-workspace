@@ -1,0 +1,26 @@
+{
+  "at_kst": "2026-09-09T09:19:40.029596+09:00",
+  "direct_ui_turn": "01a08381-3d0e-7441-8b28-781de7efec48",
+  "native_ui_results": [
+    {
+      "event": "UserPromptSubmit",
+      "source": "project",
+      "result": "hook timed out after 3s"
+    },
+    {
+      "event": "Stop",
+      "source": "project",
+      "result": "hook timed out after 3s"
+    }
+  ],
+  "diagnostics": 0,
+  "observations": 0,
+  "business_events": 0,
+  "cause_boundary": "Hook invoked; command did not finish inside3seconds; internal slow stage not yet established",
+  "next_check": {
+    "surface": "Installed Windows launch chain and pre-admission startup",
+    "risk": "No business event writes; empty synthetic input only",
+    "decision_value": "Differentiate startup timeout/config failure from uninvoked handler without model request",
+    "cost": "One local command timeout8seconds; fixed-code and elapsed only; no full suite/build/newworker"
+  }
+}

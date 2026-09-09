@@ -1,0 +1,21 @@
+{
+  "at_kst": "2026-09-09T10:22:04.916421+09:00",
+  "confirmed_product_failure": "Native UPS/Stop exceed3seconds; last representative turn Stop observation1 but business events0",
+  "agent_errors": [
+    "Used internal tool-delivered message as direct UPS check",
+    "Used COMSPEC verification for a PowerShell Host",
+    "Repeated installation and trust before matching complete Host contract",
+    "Allowed worker to exceed bound before taking over",
+    "Introduced malformed test source while changing CLI tests"
+  ],
+  "current_state": {
+    "cold_start_source_unverified": true,
+    "syntax_repaired_ast_parse_passed": true,
+    "test_cases_run_this_audit": 0,
+    "native_requests_this_audit": 0,
+    "v10_dependency_install_finished_exit0": true,
+    "all_delegated_agents_completed_or_interrupted": true,
+    "product_complete": false
+  },
+  "next": "Keep unverified candidate inactive; consolidate minimal source change and compatible verification before any further runtime attempt"
+}

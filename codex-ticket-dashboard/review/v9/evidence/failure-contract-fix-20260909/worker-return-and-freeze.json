@@ -1,0 +1,48 @@
+{
+  "source": "Final report from /root/fix_hook_failure_contract; commands observed by worker, no separate execution logs were provided",
+  "routing": {
+    "model": "gpt-5.6-sol",
+    "reasoning": "high"
+  },
+  "red": {
+    "runs": 1,
+    "passed": 0,
+    "failed": 4
+  },
+  "initial_green": {
+    "runs": 1,
+    "passed": 4,
+    "failed": 0
+  },
+  "final_green": {
+    "runs": 1,
+    "passed": 4,
+    "failed": 0,
+    "seconds": 5.75,
+    "actual_template_chain": true
+  },
+  "ruff": "PASS",
+  "basedpyright": {
+    "errors": 0,
+    "warnings": 0,
+    "notes": 0
+  },
+  "unique_cases": 4,
+  "test_case_executions": 12,
+  "source_sha256": {
+    "hooks/observe.cmd": "3056f7d504d1176b580c1407dbc9af185b955f6a4674bd3857548f532b059522",
+    "hooks/correction-hooks.example.json": "8b2fdcec71893dc6beda00851dd73f66cb7e2d60b1fdf3492d2575359c68a1f1",
+    "src/codex_ticket_dashboard/lifecycle/command.py": "da30e9a5e01f46a0fbbfed1a814a91bb9f576e793fb3506e3b89893994514186",
+    "src/codex_ticket_dashboard/lifecycle/command_diagnostics.py": "0e4e5957607a3d8e5c341d5001fd80895f1dcebed7c668cbeb79c0d4b3ebda6a",
+    "tests/integration/test_lifecycle_spool.py": "50c22975d7b11a2382bb4b3cf1b5d6e2f54e1d1ae5c60db9d5b116f5ba82af01",
+    "tests/integration/test_hook_failure_reporting.py": "58d5b2c391e4c2a40d9dea0d4d022644fc7e0568ef557c90c61652e376ad7140"
+  },
+  "root_review": {
+    "raw_input_guard_restored": true,
+    "post_rename_handle_verification": true,
+    "closed_metadata_only": true,
+    "fixed_filename_count": 7,
+    "nonblocking_ordinary_errors": true
+  },
+  "product_automatic_registration": "UNVERIFIED"
+}

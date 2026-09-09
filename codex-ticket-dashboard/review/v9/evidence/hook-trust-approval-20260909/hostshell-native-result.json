@@ -1,0 +1,26 @@
+{
+  "at_kst": "2026-09-09T09:51:13.019306+09:00",
+  "turn_id": "01a083a5-6917-7980-a548-47de32498b7e",
+  "logs": {
+    "lifecycle-command-Stop.json": {
+      "schema_version": 1,
+      "hook_event": "Stop",
+      "status": "SUCCEEDED",
+      "stage": "ADMISSION",
+      "code": "RECORDED",
+      "thread_id": "thr_01a07bdd-ad92-7750-bb60-7bb3eba6c0d9",
+      "turn_id": "01a083a5-6917-7980-a548-47de32498b7e"
+    }
+  },
+  "observations": [
+    {
+      "event_id": "evt_d7e4a43d-0111-45ad-a78f-2feaa5dfe08d",
+      "hook_event": "Stop",
+      "thread_id": "thr_01a07bdd-ad92-7750-bb60-7bb3eba6c0d9",
+      "turn_id": "01a083a5-6917-7980-a548-47de32498b7e",
+      "mcp_readiness": "UNVERIFIED",
+      "project_resolution_state": "RESOLVED"
+    }
+  ],
+  "business": []
+}

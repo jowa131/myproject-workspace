@@ -1,0 +1,10 @@
+{
+  "construction": "Official build_command raw_arg quoted commandline; no list re-escaping",
+  "elapsed_sec": 3.38,
+  "returncode": 1,
+  "stdout_bytes": 0,
+  "stderr_bytes": 54,
+  "fixed_codes": [
+    "INPUT_INVALID"
+  ]
+}

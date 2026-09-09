@@ -1,0 +1,15 @@
+# Copy this file to config.toml and replace every C:\\Synthetic... value with
+# an approved absolute path on a current-user-owned local fixed drive.
+# Do not put credentials, tokens, or prompt/transcript content in this file.
+schema_version = 1
+data_root = "C:\\SyntheticCodexTicketDashboard"
+
+[[projects]]
+schema_version = 1
+project_id = "prj_example_dashboard"
+label = "Example Codex Ticket Dashboard"
+roots = ["C:\\SyntheticWorkspace\\codex-ticket-dashboard"]
+worktree_roots = ["C:\\SyntheticWorkspace\\codex-ticket-dashboard-worktrees"]
+wiki_authority = "CENTRAL_WIKI"
+authority_source_ref = "wiki/knowledge/14 Codex 작업 티켓 추적 도구 선택.md"
+authority_source_sha256 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"

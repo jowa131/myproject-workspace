@@ -1,0 +1,29 @@
+{
+  "at_kst": "2026-09-09T09:49:32.070839+09:00",
+  "owned_states": {
+    "C:\\MyProject\\codex-ticket-dashboard\\.omo\\probes\\correction-host-20260907\\.codex\\hooks.json:user_prompt_submit:0:0": {
+      "trusted_hash": "sha256:91a85cbc73e4d27d12c94d925efdb5789184e03ef5fee818cc4a3db0242b0d30",
+      "enabled": true
+    },
+    "C:\\MyProject\\codex-ticket-dashboard\\.omo\\probes\\correction-host-20260907\\.codex\\hooks.json:subagent_stop:0:0": {
+      "trusted_hash": "sha256:a6600f6518b8caf604aa47640265de0f9694a9f24c74f0b567e03d34c7fb904f"
+    },
+    "C:\\MyProject\\codex-ticket-dashboard\\.omo\\probes\\correction-host-20260907\\.codex\\hooks.json:subagent_start:0:0": {
+      "trusted_hash": "sha256:f9376165a73a39b80152a14dec06d6a3c5dde26fac703c204b2839e09c3e0c2d"
+    },
+    "C:\\MyProject\\codex-ticket-dashboard\\.omo\\probes\\correction-host-20260907\\.codex\\hooks.json:stop:0:0": {
+      "trusted_hash": "sha256:0675dfa580e37a6172f6ba525e14750676f37eed1b4033a7b6baf893775a248e"
+    },
+    "C:\\MyProject\\codex-ticket-dashboard\\.omo\\probes\\correction-host-20260907\\.codex\\hooks.json:session_start:0:0": {
+      "trusted_hash": "sha256:0e6300ecc38a7d99f349af0aaa11dd362f49da89c3efb19b15550d2b2e8a6192"
+    },
+    "C:\\MyProject\\codex-ticket-dashboard\\.omo\\probes\\correction-host-20260907\\.codex\\hooks.json:session_end:0:0": {
+      "trusted_hash": "sha256:78e2be52c0de326b1cd0a90484e2755e8f843d6ef37ca1ba77137f310fd73044"
+    }
+  },
+  "outside_owned_unchanged": true,
+  "six_enabled": true,
+  "command_sha256": "ed8c85f58231b8b2f79df5d7053aa5696926062955f93b9625dfa49815fcf189",
+  "timeouts_unchanged": true,
+  "native_recheck_reason": "Source-confirmed environment.shell=PowerShell routing; corrected call expression passed3focuscases"
+}

@@ -1,0 +1,10 @@
+{
+  "at_kst": "2026-09-09T09:42:31.887442+09:00",
+  "source": "https://github.com/openai/codex/blob/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/core/src/session/mod.rs#L4453-L4481",
+  "confirmed": "Hook shell derives from environment.shell; explicit PowerShell invokes command string as an expression",
+  "prior_local_check_limitation": "COMSPEC test did not exercise Desktop PowerShell",
+  "correction": "Retain PowerShell call operator and explicit LASTEXITCODE, remove nested executable only",
+  "compatibility": "Windows PowerShell Host profile; do not claim cmd/bash Host support",
+  "cost": "3 focused cases on changed actual shell contract, one corrective native check after passing",
+  "no_timeout_change": true
+}

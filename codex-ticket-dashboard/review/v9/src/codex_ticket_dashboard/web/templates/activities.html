@@ -1,0 +1,41 @@
+<section class="panel activity-intro" aria-label="관측 범위 안내">
+  <p>프로젝트나 티켓 연결 전의 활동도 표시합니다. 응답 정지나 연결 기록은 사용자 수락을 의미하지 않습니다.</p>
+  <p class="muted">관측된 사건만 확인할 수 있습니다. 전체 작업이나 관측되지 않은 기간의 정상 동작은 확인된 정보가 아닙니다.</p>
+</section>
+{% if activity_error %}
+<section class="warning" role="alert"><strong>조회 조건을 확인하십시오</strong><span>목록 크기는 1~200, 조회 순서는 0 이상이어야 합니다. <a href="/activities">기본 목록으로 돌아가기</a></span></section>
+{% else %}
+<details class="panel activity-filter-panel" {% if activity_query.source_host or activity_query.thread_id or activity_query.turn_id or activity_query.parent_thread_id or activity_query.ticket_id %}open{% endif %}>
+<summary>조회 조건 · 한 페이지 {{ activity_query.limit }}개</summary>
+<p class="muted">작업·응답·출처 링크를 선택하면 해당 조건으로 조회합니다.</p>
+<dl class="activity-facts" aria-label="현재 활동 조회 조건">
+  {% for name, label in [('source_host','관측 출처'),('thread_id','작업 ID'),('turn_id','응답 ID'),('parent_thread_id','상위 작업 ID'),('ticket_id','연결 티켓 ID')] %}
+  {% if activity_query|attr(name) %}<div><dt>{{ label }}</dt><dd><code>{{ activity_query|attr(name) }}</code></dd></div>{% endif %}
+  {% endfor %}
+</dl>
+<nav class="activity-filter-actions" aria-label="활동 조회 크기">{% for size,url in activity_page_sizes %}<a href="{{ url }}">{{ size }}개씩 보기</a>{% endfor %}<a href="/activities">조건 초기화</a></nav>
+</details>
+<p class="muted activity-page-note">이 페이지 {{ cards|length }}건 · 고정 조회 순서 {{ activity_page.snapshot_high_watermark }} · 시간은 KST 기준</p>
+{% for card in cards %}
+{% set item = card.item %}
+<article class="panel activity-card" aria-labelledby="activity-{{ item.ingest_seq }}">
+  <header class="activity-heading"><h3 id="activity-{{ item.ingest_seq }}">{{ card.title }}</h3><span class="badge {{ 'warn' if item.semantic_state == 'MISSING' else 'neutral' }}">{{ card.record_label }}</span></header>
+  <p class="muted">관측 시각 <time datetime="{{ item.observed_at }}">{{ card.observed_time }}</time></p>
+  <dl class="activity-facts">
+    <div><dt>작업 ID</dt><dd><a href="/activities?{{ {'source_host':item.source_host,'thread_id':item.thread_id}|urlencode }}"><code>{{ item.thread_id }}</code></a><small><a href="/activities?{{ {'source_host':item.source_host,'parent_thread_id':item.thread_id}|urlencode }}">하위 작업 관측 보기</a></small></dd></div>
+    <div><dt>응답 ID</dt><dd>{% if item.turn_id %}<a href="/activities?{{ {'source_host':item.source_host,'thread_id':item.thread_id,'turn_id':item.turn_id}|urlencode }}"><code>{{ item.turn_id }}</code></a>{% else %}미확인{% endif %}</dd></div>
+    <div><dt>관측 당시 프로젝트</dt><dd>{{ card.observed_project }}</dd></div>
+    <div><dt>현재 식별 결과</dt><dd>{{ card.effective_project }}</dd></div>
+    <div><dt>현재 상위 작업 ID</dt><dd><code>{{ item.effective_parent_thread_id or '미확인' }}</code><small>{{ card.relation_label }}</small></dd></div>
+    <div><dt>관측 출처</dt><dd><a href="/activities?{{ {'source_host':item.source_host}|urlencode }}"><code>{{ item.source_host }}</code></a><small>{{ {'cli':'명령줄','vscode':'편집기','unknown':'환경 미확인'}[item.source_kind] }} · {{ card.coverage_label }}</small></dd></div>
+  </dl>
+  <div class="activity-records"><h4>연결 티켓</h4>{% if item.linked_ticket_ids %}<ul class="copy-list">{% for ticket_id in item.linked_ticket_ids %}<li><a href="/tickets/{{ ticket_id|urlencode }}"><code>{{ ticket_id }}</code></a></li>{% endfor %}</ul>{% else %}<p class="muted">연결된 티켓이 확인되지 않았습니다.</p>{% endif %}</div>
+  {% if card.missing_labels %}<p class="activity-missing"><strong>확인할 기록</strong> {{ card.missing_labels|join(' · ') }}</p>{% endif %}
+  <p class="activity-next"><strong>다음 단계</strong> {{ card.next_action }}</p>
+  <details class="activity-details"><summary>관측 근거 상세</summary><dl class="activity-facts"><div><dt>사건 ID</dt><dd><code>{{ item.event_id }}</code></dd></div><div><dt>프로젝트 관측 ID</dt><dd><code>{{ item.project_observation_id }}</code></dd></div><div><dt>관측 지점</dt><dd><code>{{ item.hook_event }}</code></dd></div><div><dt>관측 당시 상위 작업 ID</dt><dd><code>{{ item.parent_thread_id or '관측값 없음' }}</code></dd></div><div><dt>관측 당시 관계</dt><dd>{{ {'VERIFIED':'관계 확인됨','UNVERIFIED':'관계 미확인','CONFLICT':'관계 충돌'}[item.relation_state] }}</dd></div><div><dt>당시 확인 요구 코드</dt><dd><code>{{ item.missing_requirements|join(', ') or '없음' }}</code></dd></div><div><dt>기록 도구</dt><dd>{{ card.readiness_label }}</dd></div></dl><p class="muted">이 표시는 사건의 관측 근거입니다. 작업 완료 여부와 사용자 결정은 연결 티켓에서 별도로 확인하십시오.</p></details>
+</article>
+{% else %}
+<section class="panel"><h3>관측 기록이 아직 확인되지 않았습니다</h3><p class="empty">현재 조회 조건에 맞는 관측 기록이 없습니다. 활동이 없었다는 뜻은 아닙니다.</p><p>관측 경로와 수집 상태를 확인하십시오. 조회 조건을 사용했다면 조건을 초기화해 확인하십시오.</p><p class="activity-next"><a href="/ingest/issues">수집 이슈 확인</a></p></section>
+{% endfor %}
+<nav class="activity-pagination" aria-label="활동 목록 페이지">{% if next_activity_url %}<a href="{{ next_activity_url }}">다음 활동</a>{% endif %}<a href="/activities">최신 목록 다시 조회</a></nav>
+{% endif %}

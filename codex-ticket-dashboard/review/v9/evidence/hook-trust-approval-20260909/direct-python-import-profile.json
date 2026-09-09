@@ -1,0 +1,136 @@
+{
+  "elapsed_sec": 1.73,
+  "returncode": 1,
+  "fixed_codes": [
+    "INPUT_INVALID"
+  ],
+  "top_cumulative": [
+    {
+      "self_us": 7334,
+      "cumulative_us": 523419,
+      "module": "codex_ticket_dashboard.compliance.project_registry"
+    },
+    {
+      "self_us": 23190,
+      "cumulative_us": 490595,
+      "module": "codex_ticket_dashboard.config"
+    },
+    {
+      "self_us": 1000,
+      "cumulative_us": 408056,
+      "module": "pydantic_settings"
+    },
+    {
+      "self_us": 8309,
+      "cumulative_us": 405592,
+      "module": "pydantic_settings.main"
+    },
+    {
+      "self_us": 1254,
+      "cumulative_us": 306226,
+      "module": "typer"
+    },
+    {
+      "self_us": 984,
+      "cumulative_us": 189112,
+      "module": "pydantic_settings.sources"
+    },
+    {
+      "self_us": 1125,
+      "cumulative_us": 183035,
+      "module": "asyncio"
+    },
+    {
+      "self_us": 2780,
+      "cumulative_us": 179115,
+      "module": "codex_ticket_dashboard.lifecycle.stop_observer"
+    },
+    {
+      "self_us": 13161,
+      "cumulative_us": 169562,
+      "module": "pydantic.main"
+    },
+    {
+      "self_us": 44,
+      "cumulative_us": 148714,
+      "module": "typer._click.exceptions"
+    },
+    {
+      "self_us": 808,
+      "cumulative_us": 148671,
+      "module": "typer._click"
+    },
+    {
+      "self_us": 8896,
+      "cumulative_us": 147863,
+      "module": "typer._click.core"
+    },
+    {
+      "self_us": 3222,
+      "cumulative_us": 137714,
+      "module": "pydantic"
+    },
+    {
+      "self_us": 11284,
+      "cumulative_us": 132394,
+      "module": "typer.main"
+    },
+    {
+      "self_us": 2730,
+      "cumulative_us": 126625,
+      "module": "codex_ticket_dashboard.lifecycle.initial_preflight"
+    }
+  ],
+  "top_self": [
+    {
+      "self_us": 47589,
+      "cumulative_us": 53276,
+      "module": "typing_extensions"
+    },
+    {
+      "self_us": 33258,
+      "cumulative_us": 40202,
+      "module": "typing"
+    },
+    {
+      "self_us": 31347,
+      "cumulative_us": 100791,
+      "module": "pydantic._internal._generate_schema"
+    },
+    {
+      "self_us": 29703,
+      "cumulative_us": 34977,
+      "module": "pydantic_core.core_schema"
+    },
+    {
+      "self_us": 27328,
+      "cumulative_us": 30630,
+      "module": "pydantic_settings.sources.providers.cli"
+    },
+    {
+      "self_us": 26076,
+      "cumulative_us": 73069,
+      "module": "inspect"
+    },
+    {
+      "self_us": 25943,
+      "cumulative_us": 48054,
+      "module": "codex_ticket_dashboard.storage.models"
+    },
+    {
+      "self_us": 25876,
+      "cumulative_us": 33491,
+      "module": "codex_ticket_dashboard.ingest.payload_models"
+    },
+    {
+      "self_us": 25568,
+      "cumulative_us": 28305,
+      "module": "pydantic.json_schema"
+    },
+    {
+      "self_us": 23190,
+      "cumulative_us": 490595,
+      "module": "codex_ticket_dashboard.config"
+    }
+  ]
+}

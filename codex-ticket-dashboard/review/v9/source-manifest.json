@@ -1,0 +1,493 @@
+{
+  "schema_version": 1,
+  "snapshot": "installed-v9",
+  "product_status": "PRODUCT-GOAL-INCOMPLETE",
+  "source_manifest_sha256": "7eda03e8d79a3315b04c63c2c4b7a3b9be2703f6acfdc7e0321dce5ea01dc27b",
+  "files": [
+    {
+      "path": "src/codex_ticket_dashboard/__init__.py",
+      "sha256": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed",
+      "size": 22
+    },
+    {
+      "path": "src/codex_ticket_dashboard/compliance/__init__.py",
+      "sha256": "6d12bfbc4c1b3a86d661aa55f2bf145788c95b86a783592efc2cbef88f6889b6",
+      "size": 59
+    },
+    {
+      "path": "src/codex_ticket_dashboard/compliance/git_gate.py",
+      "sha256": "6c17341306b8a30500ace8b4cfc618d85fe4217068a53977ab1aa77f5cd98aeb",
+      "size": 4657
+    },
+    {
+      "path": "src/codex_ticket_dashboard/compliance/policy_resolver.py",
+      "sha256": "35641e1532d21d4c34603481fcd418776372bab9cdf55456556548174cdbcf3f",
+      "size": 4182
+    },
+    {
+      "path": "src/codex_ticket_dashboard/compliance/project_registry.py",
+      "sha256": "d1f02b6e7a2aee19591526b67bc1c8f0144620b60671104c6498310aac0216ef",
+      "size": 9039
+    },
+    {
+      "path": "src/codex_ticket_dashboard/compliance/runtime_authority.py",
+      "sha256": "f5c0e55ac51a4b8e96d6c6ff04f6dcbf840337e7e2ad3ef9b1e5d4ea89a1dd67",
+      "size": 8244
+    },
+    {
+      "path": "src/codex_ticket_dashboard/compliance/runtime_authority_models.py",
+      "sha256": "8905a7b758ee2af5cfcfc249c7615896ad33ba9f0419d67c920af8c1592dce78",
+      "size": 3470
+    },
+    {
+      "path": "src/codex_ticket_dashboard/compliance/wiki_gate.py",
+      "sha256": "2138b77d95d046995d50f3f0c506ec2b99b356851e6fdd7956a5c94164e73fe6",
+      "size": 4316
+    },
+    {
+      "path": "src/codex_ticket_dashboard/config.py",
+      "sha256": "c48f790121bc789e04ef4c00ab14e8e3a9cc4222df226073334afdcb79db2152",
+      "size": 5891
+    },
+    {
+      "path": "src/codex_ticket_dashboard/domain/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "src/codex_ticket_dashboard/domain/events.py",
+      "sha256": "00ce7c875ae667dcf184af5328b643cf23005b8af92c70c6d63db7d8b278ca5c",
+      "size": 10640
+    },
+    {
+      "path": "src/codex_ticket_dashboard/domain/identifiers.py",
+      "sha256": "fbe0c523cd0c0c63ec11c2b23760d8db99e028dfbaa6c9d4462d05a911a0be50",
+      "size": 5537
+    },
+    {
+      "path": "src/codex_ticket_dashboard/domain/receipts.py",
+      "sha256": "4402af65e61330d4d1bb4b8240ba76da420a733ecdba50f061afb35cd03715d8",
+      "size": 5413
+    },
+    {
+      "path": "src/codex_ticket_dashboard/domain/redaction.py",
+      "sha256": "eca605e3675989c6088c84a5b7372debd0cf5048507027818020ffe22d7eea9d",
+      "size": 7446
+    },
+    {
+      "path": "src/codex_ticket_dashboard/domain/source_metadata.py",
+      "sha256": "1ce8f38cd336e972f97254a94f85315858b3779ad670051f4005ed3717e8c145",
+      "size": 1588
+    },
+    {
+      "path": "src/codex_ticket_dashboard/domain/status.py",
+      "sha256": "6b75ac56034f046101331e55036010f4b8cb3b1e258c45bbd43194539ecc2833",
+      "size": 9791
+    },
+    {
+      "path": "src/codex_ticket_dashboard/domain/turns.py",
+      "sha256": "8eedaa617551febedddee03556c9e8008edea62d6125c0c3236696319d92835c",
+      "size": 1088
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/__init__.py",
+      "sha256": "b11091b04642080ca1234583bca5c75d168374e7b3592dc737ac3f758b1ecd20",
+      "size": 35
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/archive.py",
+      "sha256": "edc2665b2e19ce389c50cb389edc8665cddaa0fba6784c6a6aff8cc67f802527",
+      "size": 5669
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/authority_models.py",
+      "sha256": "5144b922743bc908bf1854c2557f485ed6ea60654237c6e3df1e745e690496aa",
+      "size": 11350
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/authority_seam.py",
+      "sha256": "896810eedfe17d57df9ab3c8601b64eb2dfe1fd4f398f6b8d56333e7a2339bcd",
+      "size": 10435
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/collector.py",
+      "sha256": "719d08aa0af2571b9437cff6165a6220097e692a93d79f2fd21b24efc5bbd836",
+      "size": 10599
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/continuation_projection.py",
+      "sha256": "5c3953e29b5d48c419adddce5d94d908e1e9c67b36699663a314848c061e2375",
+      "size": 2617
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/dead_letter.py",
+      "sha256": "3b6660eae42974676a1b0527b7ce615e966374e56ebf4f02359c486541620348",
+      "size": 7813
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/decisions.py",
+      "sha256": "f06bb19c761149b9075f96b970e9310ebb292a04c5752d5f0c0689eb03a924a7",
+      "size": 9012
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/dependencies.py",
+      "sha256": "8ed8bccce433cca40b4322a9b9ab308753d7f9379aac8b3cfaa4b8e8a2e1a167",
+      "size": 10753
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/identity.py",
+      "sha256": "9fbea929742c124d50794cfe5a2b9eaeeccebea93d9a237ed0fb04082f750329",
+      "size": 3076
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/lifecycle_identity.py",
+      "sha256": "7cf04fce18383ff3b11527ee4def676d13a55d068782faa9a81bd4a3f3e3df2a",
+      "size": 3174
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/lifecycle_projection.py",
+      "sha256": "ac58585fea949db0c79c1989ae27d30246a9c6d4e158ca1923ea643a8ea4e4eb",
+      "size": 6881
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/payload_models.py",
+      "sha256": "aedea90655a94fec7d5c467bb579824386a31e7a1cf576626a5a5bc16d9787c6",
+      "size": 9842
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/payloads.py",
+      "sha256": "812da6d62b246f0d883245ac58921200d8a6c24ef30920cd02a991c308592764",
+      "size": 12047
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/privacy_disposition.py",
+      "sha256": "2e020708fa8002a9ae103c4280386055adc8a1beaebb3fbdac8d8a46bc399032",
+      "size": 4059
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/projector.py",
+      "sha256": "00acc15df5b5570a826fa745596e39c3f4f63852051b7302e7538b531905d903",
+      "size": 10729
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/recovery.py",
+      "sha256": "00c9d648ea659968e6df0ac6edc3879aa61a6d076e0b4d0605cf7d27f664029f",
+      "size": 9664
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/review_invalidation.py",
+      "sha256": "a60bb0fbe1d35ee84c6632eaabdf609eb042c750ffecd9e30d0901003294a823",
+      "size": 10619
+    },
+    {
+      "path": "src/codex_ticket_dashboard/ingest/runtime_bootstrap.py",
+      "sha256": "7132a20a0743365de4d00e572f00a603c6bc291eedfdf447018ab0105e1f0d67",
+      "size": 9937
+    },
+    {
+      "path": "src/codex_ticket_dashboard/lifecycle/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "src/codex_ticket_dashboard/lifecycle/admission.py",
+      "sha256": "dcc7ba32d73cc1ac03360399d6e8b90ca164806a465ca61f9fbe42ed533fc614",
+      "size": 3514
+    },
+    {
+      "path": "src/codex_ticket_dashboard/lifecycle/command.py",
+      "sha256": "da30e9a5e01f46a0fbbfed1a814a91bb9f576e793fb3506e3b89893994514186",
+      "size": 4428
+    },
+    {
+      "path": "src/codex_ticket_dashboard/lifecycle/completeness.py",
+      "sha256": "ac924fbbb4f7088929be773109bc3f02efc517a5a26222ebe7a745be208ea8bf",
+      "size": 4688
+    },
+    {
+      "path": "src/codex_ticket_dashboard/lifecycle/continuation.py",
+      "sha256": "b02cf96f1717ed5fd5606e14dc74f3f835a3af0f3360aded3d44fba4065792d1",
+      "size": 5381
+    },
+    {
+      "path": "src/codex_ticket_dashboard/lifecycle/contracts.py",
+      "sha256": "c2689b33b8694ea79a280218104f9764fa9d360d018b3306d827b3a43afc591e",
+      "size": 7517
+    },
+    {
+      "path": "src/codex_ticket_dashboard/lifecycle/identity.py",
+      "sha256": "7a5d59cb52a05019cb2a6044ceed97d2f81a674d992ec116bc82afaaba36b535",
+      "size": 1581
+    },
+    {
+      "path": "src/codex_ticket_dashboard/lifecycle/normalization.py",
+      "sha256": "22fde5e12f1792eed682be592dc02225cd2783119cffdf089fb02d40629a9a7f",
+      "size": 3505
+    },
+    {
+      "path": "src/codex_ticket_dashboard/lifecycle/receipts.py",
+      "sha256": "5263112090c38122eb25737dc6d0c901a02417482de26a49083dab70f64fe728",
+      "size": 5261
+    },
+    {
+      "path": "src/codex_ticket_dashboard/lifecycle/review_evidence.py",
+      "sha256": "c2a61d149039fb352ec41f92a8deecf67c7417744255a6fad7b312d0e0c31596",
+      "size": 3215
+    },
+    {
+      "path": "src/codex_ticket_dashboard/lifecycle/stop_observer.py",
+      "sha256": "1a7bdcac84d3bf61fb9f427e35286065bd225abcdcdd6fab5f9d5d7a305ca799",
+      "size": 7891
+    },
+    {
+      "path": "src/codex_ticket_dashboard/lifecycle/stop_reading.py",
+      "sha256": "45c26f190edd1b0ca7fd77e37ccbfa62b3dd037e00197919e79dcf798f0b53f3",
+      "size": 5913
+    },
+    {
+      "path": "src/codex_ticket_dashboard/mcp/__init__.py",
+      "sha256": "54c38e8f94ad2ee6e70eb3786305260acee2276c92f092697da71539e496993f",
+      "size": 6536
+    },
+    {
+      "path": "src/codex_ticket_dashboard/mcp/claim_context.py",
+      "sha256": "e138327304a2236928fa9b3d974ea545e9d7fddb0c0932e679c6c8e0a022886e",
+      "size": 5879
+    },
+    {
+      "path": "src/codex_ticket_dashboard/mcp/official_context.py",
+      "sha256": "01b9aeeb8d8b62eb8548b9636c62597c4e823ea6ae1d6d9a4a3e1776c1c38c13",
+      "size": 10964
+    },
+    {
+      "path": "src/codex_ticket_dashboard/mcp/policy_context.py",
+      "sha256": "9327e01d495ca5b7aa4ea0106b84aa95bf281f1dbc7e41cd2e129984dc0f5abe",
+      "size": 7389
+    },
+    {
+      "path": "src/codex_ticket_dashboard/mcp/schemas.py",
+      "sha256": "5c6cff3f9b14ab2b8b9cd22bda73731d72663105ce86272407f8b65621513803",
+      "size": 10642
+    },
+    {
+      "path": "src/codex_ticket_dashboard/mcp/server.py",
+      "sha256": "d29ddf871719f322ee5d09f1dd24be23a0fb5831b526b01b738494e5f41c46f5",
+      "size": 9149
+    },
+    {
+      "path": "src/codex_ticket_dashboard/mcp/tools.py",
+      "sha256": "ac6b0e550c7d305186ccd25bc0aff3cfb39429fb85fb3cd3e0bea5c17673c348",
+      "size": 9445
+    },
+    {
+      "path": "src/codex_ticket_dashboard/runtime.py",
+      "sha256": "2ed94748c5942a4027420f7f37ac639064ca2b8d4c23d4d4313a096fdaed8cfd",
+      "size": 9178
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/__init__.py",
+      "sha256": "4e70a51c0a28fbd5bd3d1d38de5650c1b0e72d22a39d62e36d02c201d7d45696",
+      "size": 265
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/causation_queries.py",
+      "sha256": "b4b77f1443d4edab9cc179075c98bad5cee613427c55d94f455d27faa3ed3ed3",
+      "size": 3946
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/database.py",
+      "sha256": "bff2685dc6b8097e09534558fda0a374e239dbdb91692f7152019c791a71876e",
+      "size": 11116
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/lifecycle_queries.py",
+      "sha256": "734e8511345a25d57bde44cec614ad3802d7b54556e7a9616fd13ec3e3b875f0",
+      "size": 9549
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/locks.py",
+      "sha256": "983a23a9cd210d74c2b759a5a3add73a9587617497a7c220ec5057539525372b",
+      "size": 2841
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/migrations/001_initial.sql",
+      "sha256": "96f8f6c2754aa87a8ca95f96ba7a91c2cbd6592b2d1c440ddbd7fd4745ea25a4",
+      "size": 20424
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/migrations/002_lifecycle_observations.sql",
+      "sha256": "49dff926936fd825fce7afd9ce82a13f38a104da1ce3e0b2f292579106f867f8",
+      "size": 2646
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/migrations/003_lifecycle_mcp_contexts.sql",
+      "sha256": "44c9bb635eae249d98869ac6093f9584020fb4c294b884721482b036555dfaa0",
+      "size": 395
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/models.py",
+      "sha256": "512dc3667643565d57d8ab04ea0280d11ba0e4bcfbd97c2deb6c82789e6f74b4",
+      "size": 9213
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/path_security.py",
+      "sha256": "cb7148603daf6c6fc2214f505585c4f39adc4bbd6ce8a8e6f2c511e2ef752b49",
+      "size": 10609
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/readonly_observation.py",
+      "sha256": "5f1752248b791c872d2fe73b764087a2cba3393df5f350a37df619b7c46c64ec",
+      "size": 3350
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/recording_assessment.py",
+      "sha256": "196d1999195892f71fc24b49cca6056ef63e4158d627e3830621ef1094091edf",
+      "size": 1899
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/related_recording.py",
+      "sha256": "e9f0db1c20afab17102f2f09b317e2d4e351ec34afc06bc8d473939b4b2dc9cd",
+      "size": 3502
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/repository.py",
+      "sha256": "a9420210b99a942594ef344272582501b6d879e2edc5ae56322a479ea35af44c",
+      "size": 11702
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/runtime_execution.py",
+      "sha256": "f8336a30c095eb81d8d0569867804582a1bfe78b3ff1208bfbcae3dbf2e04673",
+      "size": 5846
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/spool.py",
+      "sha256": "94ef6740fbdb5c1443d85f8a59cbf227b9e2c2ed2c77d79297e6d9ab3f51a236",
+      "size": 9350
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/turn_recording.py",
+      "sha256": "84cfb71343d7a03b289a19c12b41f04706b82ad91181932d4be2d2924f3498c9",
+      "size": 3498
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/win32_acl.py",
+      "sha256": "674251296cae1dc3780f7c9f3b299255dee23e38a74e1439e9617b009e5dfd37",
+      "size": 6766
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/win32_acl_native.py",
+      "sha256": "41aecfb57f5290d8feb552f41005b6cdfc116fe7150f23c96a6650b06e9a7593",
+      "size": 4026
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/win32_handles.py",
+      "sha256": "0fcb7e7ed61ccd411071f8a717a9248fe512f091ae45923c5265815e1ca205b8",
+      "size": 9780
+    },
+    {
+      "path": "src/codex_ticket_dashboard/storage/win32_native.py",
+      "sha256": "0671f50f3790726861ff38cda68d258453b80a81e43e9c0a5734f38dfb278897",
+      "size": 7494
+    },
+    {
+      "path": "src/codex_ticket_dashboard/web/__init__.py",
+      "sha256": "e28b317fc0dfb68bd572ed338f2f4a6897c5c84597ee5d5471f7c0e88e1ef350",
+      "size": 61
+    },
+    {
+      "path": "src/codex_ticket_dashboard/web/activity_pages.py",
+      "sha256": "134e3e71d78ed9c06ff2462845a050a464efb20094ed6221d715927fd500911f",
+      "size": 6255
+    },
+    {
+      "path": "src/codex_ticket_dashboard/web/api_models.py",
+      "sha256": "c07f0180ff976415324782215887c21abdea40dddbb655fc6dd1f967d4ef3f00",
+      "size": 3103
+    },
+    {
+      "path": "src/codex_ticket_dashboard/web/app.py",
+      "sha256": "d6e1ae74efe895f1c61c9c7bb7dc9e0a3e6e628bdebaf224afecd77506fbc502",
+      "size": 7941
+    },
+    {
+      "path": "src/codex_ticket_dashboard/web/cursors.py",
+      "sha256": "8c6e08ac4e488d9d642c26a9a53aaa9526ad213b6a2babd896b6abdb164f6aca",
+      "size": 3380
+    },
+    {
+      "path": "src/codex_ticket_dashboard/web/dashboard.py",
+      "sha256": "037acc4f53672f18b116c36a1c4a32a3b3be557648508fb35593ea410d347e6e",
+      "size": 2907
+    },
+    {
+      "path": "src/codex_ticket_dashboard/web/page_models.py",
+      "sha256": "50a5ba628fb8fb690337098aa0f236b0a9ea3b6b1f527a8c52fd8c0f4810ff47",
+      "size": 2277
+    },
+    {
+      "path": "src/codex_ticket_dashboard/web/pages.py",
+      "sha256": "c7258bee474f2b71da044611ebbd00502fea2b5120977d37e1bd4f7023c1c372",
+      "size": 4242
+    },
+    {
+      "path": "src/codex_ticket_dashboard/web/queries.py",
+      "sha256": "8f76eedd1399bd763d8020f042e384c50c738e927aaa1420e91990d0a02cd9af",
+      "size": 12159
+    },
+    {
+      "path": "src/codex_ticket_dashboard/web/query_rows.py",
+      "sha256": "2a435ebff4ee8b3471e645b749d360030d92b124c6d90cb93b2a70a3a2b7dcd0",
+      "size": 8687
+    },
+    {
+      "path": "src/codex_ticket_dashboard/web/security.py",
+      "sha256": "70bffbd53047aa071762627ad3a3e50aa386fd5712cbb1f957c3af597c6f10d2",
+      "size": 1619
+    },
+    {
+      "path": "src/codex_ticket_dashboard/web/static/dashboard.css",
+      "sha256": "5ff9a5a8e58fddf92b8689b955c102e55dfd1125d142a8e608b55410671cce11",
+      "size": 10197
+    },
+    {
+      "path": "src/codex_ticket_dashboard/web/templates/activities.html",
+      "sha256": "1fec9a486a40a7cf28b4f98b819f97d0c1a82605c1fbcd2cb7c27bdc39970fa4",
+      "size": 5884
+    },
+    {
+      "path": "src/codex_ticket_dashboard/web/templates/screen.html",
+      "sha256": "3f351b7500eef22b64193969cf0d081c5525cdbbb53182f34eaf009c40dc2c26",
+      "size": 12088
+    },
+    {
+      "path": "src/observe.cmd",
+      "sha256": "3056f7d504d1176b580c1407dbc9af185b955f6a4674bd3857548f532b059522",
+      "size": 169
+    },
+    {
+      "path": "src/codex_ticket_dashboard/mcp/admission_diagnostics.py",
+      "sha256": "efb7eeeff12d8974fb9bbd308d54dde95346561dd62c80ff50f2f55e2bf462ff",
+      "size": 9848
+    },
+    {
+      "path": "src/codex_ticket_dashboard/recording_guidance.py",
+      "sha256": "7bd4e47cf2ab49c632d2b46fbd13c3ffaf5137fdf3891147df3c2fba180289d9",
+      "size": 2274
+    },
+    {
+      "path": "src/codex_ticket_dashboard/mcp/input_errors.py",
+      "sha256": "a71f04faa1057b4aa26fd737671b4cf5308757ab50557e2451802ba341796c80",
+      "size": 6778
+    },
+    {
+      "path": "src/codex_ticket_dashboard/lifecycle/initial_preflight.py",
+      "sha256": "d6e3fe6e61c26b347895337f928714bdcc28f8e44abdeafd92e82065281cb9a4",
+      "size": 7213
+    },
+    {
+      "path": "src/codex_ticket_dashboard/lifecycle/command_diagnostics.py",
+      "sha256": "0e4e5957607a3d8e5c341d5001fd80895f1dcebed7c668cbeb79c0d4b3ebda6a",
+      "size": 6569
+    }
+  ]
+}
