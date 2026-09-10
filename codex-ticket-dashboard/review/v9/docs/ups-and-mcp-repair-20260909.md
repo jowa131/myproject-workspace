@@ -60,3 +60,11 @@ CLI의 Wiki 갱신에 사용한 git apply가 기존 혼합 LF/CRLF를 CRLF로 �
 별도 영구 자동승인(기록 도구 6개 approve, 사용자 결정 도구 prompt)은 자동 승인 검토에서 실행 전에 거절되어 기본 승인 정책을 유지했습니다. 화면 제어는 종료했습니다. 이번에는 제품 코드·시험·수집기 재시작·모델 업무 요청을 추가하지 않았습니다. 일반 업무의 종료 기록과 전체 릴리즈 수락은 미완료입니다.
 
 공식 설정 키: [Configuration Reference](https://learn.chatgpt.com/docs/config-file/config-reference). 근거: `.omo/evidence/operational-cutover-20260910/host-approval-1007/{host-apply,official-ui-result,postflight}.json`.
+
+## 2026-09-10 11:06 KST 도구별 영구 승인 적용
+
+사용자가 여섯 기록 도구의 영구 자동승인을 정확히 승인한 뒤, 해당 도구만 approve로 적용하고 ticket_user_decision_record는 prompt로 유지했습니다. 실행 파일·인자·기존 owner-only ACL 보존과 설정 SHA256 845afc3d0e9cbc22cb8e55b9850bc1f27387db314964b9b8a23ed4ae0cbc9fd6을 확인했습니다. 기존 파일의 ACL 보존 모드 표시는 첫 사전 검사에서 교정했으며 제품 소스는 바꾸지 않았습니다. 이전 영구 권한 승인 차단은 해소됐습니다.
+
+이번 정상 요청에서 MCP 도구 7개가 노출됐으나 첫 preflight가 OBSERVER_CONTEXT_MISSING을 반환했습니다. 같은 요청을 반복하지 않았고, 존재하지 않는 티켓·게이트 성공을 기록하지 않았습니다. 영구 승인 설정 완료와 자동 업무 기록 성공·전체 릴리즈 수락을 구분합니다. 근거: `.omo/evidence/operational-cutover-20260910/tool-approval-1102/`.
+
+11:14 KST 운영 읽기 전용 조회에서는 현재 작업의 관측 행 0개와 incoming 파일 0개, UPS 진단 파일 부재를 확인했습니다. Hook 미실행과 조기 실행 실패·시간 초과 중 원인은 아직 미확인입니다. 수집/identity 오류를 추측해 코드를 바꾸거나 동일 MCP 호출을 재시도하지 않았습니다. 다음 경계는 Host의 Hook 발화와 관측 명령 진입입니다.
